@@ -1,5 +1,5 @@
-import { connection as db} from "../config";
-import { hash, compare } from "bcrypt"
+import { connection as db} from "../config/index.js";
+// import { hash, compare } from "bcrypt"
 
 class Users{
     fetchUsers(req, res){
