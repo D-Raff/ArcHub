@@ -6,7 +6,7 @@ class Products{
         SELECT ProductID, ProductName, Category, Price, ProdImg, ProdDesc, Stock
         FROM Products;
         `
-        db.qry(qry, (err, results)=> {
+        db.query(qry, (err, results)=> {
             if (err) throw err
             res.json({
                 status: res.statuscode,
@@ -18,7 +18,7 @@ class Products{
         const qry = `
         SELECT ProductID, ProductName, Category, Price, ProdImg, ProdDesc, Stock
         FROM Products
-        WHERE prodID = ${req.params.id};
+        WHERE productID = ${req.params.id};
         `
         db.query(qry, (err, result)=>{
             if(err) throw err

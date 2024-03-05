@@ -5,7 +5,6 @@ import {errorHandling} from './middleware/ErrorHandling.js';
 import path from 'path';
 import cors from "cors"
 import { config } from "dotenv";
-import exp from "constants";
 config()
 
 const app = express()
