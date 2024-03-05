@@ -7,7 +7,7 @@ let connection = createPool({
     database: process.env.DB_NAME,
     user: process.env.DB_UserName,
     password: process.env.DB_UserPass,
-    multipleStatements: true, //this allows the dba to install multiple values (rows) at the same time
+    multipleStatements: true,
     connectionLimit: 30
 })
 export{
