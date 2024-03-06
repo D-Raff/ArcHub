@@ -1,5 +1,6 @@
 import { userRouter, express } from "./controller/userController.js";
 import {productRouter} from "./controller/productController.js";
+import { cartRouter } from "./controller/cartController.js";
 import cookieParser from "cookie-parser";
 import {errorHandling} from './middleware/ErrorHandling.js';
 import path from 'path';
@@ -33,6 +34,7 @@ app.get('^/$|/archub',(req, res)=>{
 })
 app.use('/users', userRouter)
 app.use('/products', productRouter)
+app.use('/cart', cartRouter)
 app.use(errorHandling)
 app.listen(port, ()=>{
     console.log(`Server is running on port http://localhost:${port}`);

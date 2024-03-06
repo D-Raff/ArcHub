@@ -1,6 +1,6 @@
 import "dotenv/config"
 import jwt from "jsonwebtoken";
-const {sign, verify} = jwt
+const {sign, verify, JsonWebTokenError} = jwt
 
 
 //this allows us to authenticate the user. to create a token we need to use the payload (email add and pass in this case) from the user.
@@ -8,7 +8,7 @@ const {sign, verify} = jwt
 function createToken(user){
     return sign({
         emailAdd: user.emailAdd,
-        userPwd: user.userPwd,
+        userPassword: user.userPassword
     },
     process.env.SECRET_KEY,// secret key allows us to encrypt our payload. we need to use secret key to create a token
     {
@@ -19,7 +19,7 @@ function createToken(user){
 
 function verifyToken(req, res, next){
     //retrieve token from the browser
-    // the quesstion mark is to avoid null or undefined because we don't have the value yet
+    // the question mark is to avoid null or undefined because we don't have the value yet
     const token = req?.headers['Authorization']
     if(token){
         if(verify(token, process.env.SECRET_KEY)){
@@ -37,6 +37,20 @@ function verifyToken(req, res, next){
         })
     }
 }
+
+// let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbEFkZCI6ImRhbW9ucmFmZmVsc0BnbWFpbC5jb20iLCJ1c2VyUHdkIjoiMTIzNCIsImlhdCI6MTcwOTczMDUxNywiZXhwIjoxNzA5NzM0MTE3fQ.LywHI5MTezz-Pbv8nadDYIuHxacxktlD6-HWh7qiKCg"
+// let user = verify(token, process.env.SECRET_KEY)
+
+// try {
+    
+// } catch (error) {
+//     if(error instanceof JsonWebTokenError){
+
+//     }
+// }
+
+// error instanceof JsonWebTokenError
+// console.log(user)
 
 export{
     createToken,

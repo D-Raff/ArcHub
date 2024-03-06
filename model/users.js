@@ -92,9 +92,9 @@ class Users{
         const qry = `
         SELECT userID, firstName, lastName, emailAdd, userPassword, ContactNo, userRole
         FROM Users
-        WHERE emailAdd = '${emailAdd}';
+        WHERE emailAdd = ?;
         `
-        db.query(qry, async(err, result)=>{
+        db.query(qry, [emailAdd], async(err, result)=>{
             if (err) throw err
             if(!result?.length){
                 res.json({
