@@ -4,7 +4,7 @@ import {createToken} from '../middleware/userAuthentication.js';
 class Users{
     fetchUsers(req, res){
         const qry = `
-        SELECT userID, firstName, lastName, emailAdd, userPassword, ContactNo, userRole
+        SELECT userID, firstName, lastName, emailAdd, ContactNo, userRole
         FROM Users;
         `
         db.query(qry, (err, result)=>{
@@ -31,7 +31,7 @@ class Users{
     }
     async createUser(req, res){
         let data = req.body
-        data.userPassword = await hash(data?.userPassword, 10)
+        data.userPassword = await hash(data?.userPassword, 8)
         let user = {
             emailAdd: data.emailAdd,
             userPassword: data.userPassword
@@ -70,8 +70,8 @@ class Users{
     }
     async updateUser(req, res){
         const data = req.body
-        if(data?.userPwd){
-            data.userPwd = await hash(data?.userPwd, 8)
+        if(data?.userPassword){
+            data.userPassword = await hash(data?.userPassword, 8)
         }
         const qry = `
         UPDATE Users
@@ -84,6 +84,43 @@ class Users{
                 status: res.statusCode,
                 msg: "This user was updated"
             })
+        })
+    }
+    
+    login(req, res){
+        const {emailAdd, userPassword} = req.body
+        const qry = `
+        SELECT userID, firstName, lastName, emailAdd, userPassword, ContactNo, userRole
+        FROM Users
+        WHERE emailAdd = '${emailAdd}';
+        `
+        db.query(qry, async(err, result)=>{
+            if (err) throw err
+            if(!result?.length){
+                res.json({
+                    status: statusCode,
+                    msg: "Wrong email address provided"
+                })
+            }else{
+                const validPass = await compare(userPassword, result[0].userPassword)
+                if(validPass){
+                    const token = createToken({
+                        emailAdd,
+                        userPassword
+                    })
+                    res.json({
+                        status: res.statusCode,
+                        msg: "you're logged in",
+                        token,
+                        result: result[0]
+                    })
+                }else{
+                    res.json({
+                        status: res.statusCode,
+                        msg: "Please provide the correct password"
+                    })
+                }
+            }
         })
     }
 }
