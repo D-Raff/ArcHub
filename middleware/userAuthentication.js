@@ -19,7 +19,6 @@ function createToken(user){
 
 function verifyToken(req, res, next){
     //retrieve token from the browser
-    // the question mark is to avoid null or undefined because we don't have the value yet
     const token = req?.headers['Authorization']
     if(token){
         if(verify(token, process.env.SECRET_KEY)){

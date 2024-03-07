@@ -40,18 +40,6 @@ class Products{
             })
         })
     }
-    async addProduct(req, res){
-        const qry = `
-        INSERT INTO Products SET ?;
-        `
-        db.query(qry, [req.body], (err)=>{
-            if(err) throw err
-            res.json({
-                status: res.statusCode,
-                msg: "New product was added"
-            })
-        })
-    }
     async deleteProduct(req, res){
         const qry = `
         DELETE FROM Products
