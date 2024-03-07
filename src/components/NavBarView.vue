@@ -44,18 +44,22 @@ export default {
 
 #nav-list {
     display: flex;
-    gap: 5px;
+    gap: 10px;
 }
 
 .router-btn {
     text-decoration: none;
     color: #2D619E;
 }
+.router-btn:hover{
+    color: #174478;
+    animation: underglow 2s infinite;
+}
 
 .router-link-exact-active {
     color: #2D619E;
     text-decoration: underline;
-    animation: glow 3s infinite;
+    animation: glow 3s infinite ease-in;
 }
 
 .reactor-logo{
@@ -65,6 +69,14 @@ export default {
 @keyframes reactor {
     0%{
         transform: rotate(0deg);
+    }
+    8%{
+        filter: drop-shadow(0 0 5px #14c8f0);
+        
+    }
+    15%{
+        filter: drop-shadow(0 0 20px #14c8f0);
+
     }
     50%{
         transform: rotate(360deg);
@@ -76,16 +88,28 @@ export default {
 
 @keyframes glow {
     0% {
-        text-shadow: 0px 0px 2px #488AD7;
+        text-shadow: none;
     }
 
     50% {
-        text-shadow: 0px 0px 10px #488AD7;
+        text-shadow: 0px 0px 10px #14c8f0;
     }
 
     100% {
-        text-shadow: 0px 0px 2px #488AD7;
+        text-shadow: none;
 
+    }
+}
+
+@keyframes underglow {
+    0%{
+        text-decoration: underline rgba(0, 0, 0, 1);
+    }
+    50%{
+        text-decoration: underline #174478;
+    }
+    100%{
+        text-decoration: underline rgba(0, 0, 0, 1);
     }
 }
 </style>
