@@ -24,7 +24,16 @@ cartRouter.delete('/delete/:id', bodyParser.json(), (req, res)=>{
         })
     }
 })
-
+cartRouter.delete('/delete', bodyParser.json(), (req, res)=>{
+    try {
+        cart.clearCart(req, res)
+    } catch (e) {
+        res.json({
+            status: res.statusCode,
+            msg: "cart cleared"
+        })
+    }
+})
 export{
     cartRouter, express
 }
