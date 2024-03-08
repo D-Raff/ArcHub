@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg" id="navBar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><router-link to="/home"><img src="https://iili.io/JVXI1GS.png" alt="logo" class="reactor-logo"></router-link></a>
+            <a class="navbar-brand" href="#"><router-link to="/"><img src="https://iili.io/JVXI1GS.png" alt="logo" class="reactor-logo"></router-link></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -10,7 +10,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="nav-list">
                     <li class="nav-item">
-                        <router-link to="home" class="router-btn">Home</router-link>
+                        <router-link to="/" class="router-btn">Home</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="about" class="router-btn">About Us</router-link>
@@ -26,6 +26,9 @@
                     </li>
                     <li class="nav-item">
                         <router-link to="contact" class="router-btn">Contact Us</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="login" class="router-btn">Login/Sign Up</router-link>
                     </li>
                 </ul>
             </div>
