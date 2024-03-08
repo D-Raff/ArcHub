@@ -27,7 +27,10 @@ app.use(
         extended: true,
     }),
     cookieParser(),
-    cors('http://localhost:8080/')
+    cors({
+        origin : 'http://localhost:8080',
+        credentials : true
+    })
 )
 app.get('^/$|/archub',(req, res)=>{
     res.status(200).sendFile(path.join(__dirname, './static/index.html'))
