@@ -11,15 +11,15 @@ config()
 const app = express()
 const port= +process.env.PORT || 4000
 
-app.use((req, res, next)=>{
-    res.header("Access-Control-Allow-Origin", "https://archub-471i.onrender.com/");
-    res.header("Access-Control-Allow-Credentials", "true" );
-    res.header("Access-Control-Allow-Methods", "*" ); //allows all the http methods
-    res.header("Access-Control-Request-Methods", "*" ); //alllows request methods
-    res.header("Access-Control-Allow-Headers", "*" ); // saving cookies on headers therefore we need to allow the users to access headers
-    res.header("Access-Control-Expose-Headers", "Authorization" );
-    next();
-})
+// app.use((req, res, next)=>{
+//     res.header("Access-Control-Allow-Origin", "https://archub-471i.onrender.com/");
+//     res.header("Access-Control-Allow-Credentials", "true" );
+//     res.header("Access-Control-Allow-Methods", "*" ); //allows all the http methods
+//     res.header("Access-Control-Request-Methods", "*" ); //alllows request methods
+//     res.header("Access-Control-Allow-Headers", "*" ); // saving cookies on headers therefore we need to allow the users to access headers
+//     res.header("Access-Control-Expose-Headers", "Authorization" );
+//     next();
+// })
 app.use(
     express.static("./static"),
     express.json(),
@@ -27,10 +27,7 @@ app.use(
         extended: true,
     }),
     cookieParser(),
-    cors({
-        origin : 'http://localhost:8080',
-        credentials : true
-    })
+    cors()
 )
 app.get('^/$|/archub',(req, res)=>{
     res.status(200).sendFile(path.join(__dirname, './static/index.html'))
