@@ -70,7 +70,7 @@ export default {
     color: #B01515;
     font-size: 16px;
     text-decoration: none;
-    text-transform: uppercase;
+  t  ext-transform: uppercase;
     overflow: hidden;
     transition: .5s;
     margin-top: 40px;
