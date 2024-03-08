@@ -12,7 +12,7 @@ const app = express()
 const port= +process.env.PORT || 4000
 
 app.use((req, res, next)=>{
-    res.header("Access-Control-Allow-Origin", "*" /*the star must be replaced with the firebase hosted link*/);
+    res.header("Access-Control-Allow-Origin", "https://archub-471i.onrender.com");
     res.header("Access-Control-Allow-Credentials", "true" );
     res.header("Access-Control-Allow-Methods", "*" ); //allows all the http methods
     res.header("Access-Control-Request-Methods", "*" ); //alllows request methods
