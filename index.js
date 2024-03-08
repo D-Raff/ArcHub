@@ -12,7 +12,7 @@ const app = express()
 const port= +process.env.PORT || 4000
 
 app.use((req, res, next)=>{
-    res.header("Access-Control-Allow-Origin", "https://archub-471i.onrender.com");
+    res.header("Access-Control-Allow-Origin", "https://archub-471i.onrender.com/");
     res.header("Access-Control-Allow-Credentials", "true" );
     res.header("Access-Control-Allow-Methods", "*" ); //allows all the http methods
     res.header("Access-Control-Request-Methods", "*" ); //alllows request methods
@@ -27,7 +27,7 @@ app.use(
         extended: true,
     }),
     cookieParser(),
-    cors()
+    cors('http://localhost:8080/')
 )
 app.get('^/$|/archub',(req, res)=>{
     res.status(200).sendFile(path.join(__dirname, './static/index.html'))
