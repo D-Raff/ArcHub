@@ -26,7 +26,7 @@ export default {
     },
     methods: {
         login(){
-            this.data = { emailAdd: this.emailAdd, password: this.password}
+            this.data = { emailAdd: this.emailAdd, userPassword: this.password}
             this.$store.dispatch('login', this.data)
         }
     },
@@ -70,7 +70,7 @@ export default {
     color: #B01515;
     font-size: 16px;
     text-decoration: none;
-  t  ext-transform: uppercase;
+    text-transform: uppercase;
     overflow: hidden;
     transition: .5s;
     margin-top: 40px;

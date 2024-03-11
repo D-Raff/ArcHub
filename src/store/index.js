@@ -5,7 +5,8 @@ import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 import router from "@/router";
 import AuthenticateUser from "../service/UserAuthentication";
-const db = "https://archub-471i.onrender.com/";
+const db = "https://archub-49wy.onrender.com/";
+// const db = "http://localhost:4500/";
 
 export default createStore({
   state: {
@@ -54,7 +55,8 @@ export default createStore({
     },
     async fetchUsers(context) {
       try {
-        let results = (await axios.get(`${db}users`)).data;
+        let {results} = (await axios.get(`${db}users`)).data;
+        console.log(results);
         if (results) {
           context.commit("setUsers", results);
         }
@@ -89,7 +91,30 @@ export default createStore({
         });
       }
     },
+    async editUser(context, payload) {
+      try {
+        let msg = await axios.patch(`${db}users/${payload.userID}`, payload);
+        if (msg) {
+          context.dispatch("fetchUsers");
+          sweet({
+            title: "Updated this user",
+            text: msg,
+            icon: "success",
+            timer: 4000,
+          });
+          location.reload()
+        }
+      } catch (e) {
+        sweet({
+          title: "Error",
+          text: "An error occurred while updating this user.",
+          icon: "error",
+          timer: 4000,
+        });
+      }
+    },
     async login(context, payload) {
+      console.log(payload);
       try {
         const { msg, token, result } = (
           await axios.post(`${db}users/login`, payload)
@@ -106,11 +131,14 @@ export default createStore({
           sweet({
             title: msg,
             text: `Welcome, 
-          ${result?.firstName} ${result?.lastName}`,
+            ${result?.firstName} ${result?.lastName}`,
             icon: "success",
             timer: 2000,
           });
-          router.push({ name: "/" });
+          router.push({ name: "home" });
+          let {data} = axios.get(`${db}verify`)
+          console.log(data)
+
         } else {
           sweet({
             title: "info",
@@ -125,6 +153,21 @@ export default createStore({
           text: "Failed to login.",
           icon: "error",
           timer: 4000,
+        });
+      }
+    },
+    async fetchProducts(context) {
+      try {
+        let { results } = (await axios.get(`${db}products`)).data;
+        if (results) {
+          context.commit("setProducts", results);
+        }
+      } catch (e) {
+        sweet({
+          title: "Error",
+          text: "An error occured while retrieving Products",
+          icon: "error",
+          timer: 3000,
         });
       }
     },

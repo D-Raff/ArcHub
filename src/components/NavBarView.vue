@@ -10,25 +10,25 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="nav-list">
                     <li class="nav-item">
-                        <router-link to="/" class="router-btn">Home</router-link>
+                        <router-link to="/" class="nav-link" id="router-btn" >Home</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="about" class="router-btn">About Us</router-link>
+                        <router-link to="about" class="nav-link" id="router-btn">About Us</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="products" class="router-btn">Store</router-link>
+                        <router-link to="products" class="nav-link" id="router-btn">Store</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="admin" class="router-btn">Admin</router-link>
+                        <router-link to="admin" class="nav-link" id="router-btn">Admin</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="checkout" class="router-btn">Cart</router-link>
+                        <router-link to="checkout" class="nav-link" id="router-btn">Cart</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="contact" class="router-btn">Contact Us</router-link>
+                        <router-link to="contact" class="nav-link" id="router-btn">Contact Us</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="login" class="router-btn">Login/Sign Up</router-link>
+                        <router-link to="login" class="nav-link" id="router-btn">Login/Sign Up</router-link>
                     </li>
                 </ul>
             </div>
@@ -50,18 +50,18 @@ export default {
     gap: 10px;
 }
 
-.router-btn {
+#router-btn {
     text-decoration: none;
     color: #2D619E;
 }
-.router-btn:hover{
+#router-btn:hover{
     color: #174478;
     animation: underglow 2s infinite;
 }
 
 .router-link-exact-active {
     color: #2D619E;
-    text-decoration: underline;
+    text-decoration: underline !important;
     animation: glow 3s infinite ease-in;
 }
 
