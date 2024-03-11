@@ -5,8 +5,8 @@ import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 import router from "@/router";
 import AuthenticateUser from "../service/UserAuthentication";
-const db = "https://archub-49wy.onrender.com/";
-// const db = "http://localhost:4500/";
+// const db = "https://archub-49wy.onrender.com/";
+const db = "http://localhost:4500/";
 
 export default createStore({
   state: {
@@ -56,7 +56,6 @@ export default createStore({
     async fetchUsers(context) {
       try {
         let {results} = (await axios.get(`${db}users`)).data;
-        console.log(results);
         if (results) {
           context.commit("setUsers", results);
         }
@@ -121,7 +120,6 @@ export default createStore({
         ).data;
         if (result) {
           context.commit("setUser", { msg, result });
-          alert(result)
           cookies.set("VerifiedUser", {
             msg,
             token,
@@ -135,9 +133,9 @@ export default createStore({
             icon: "success",
             timer: 2000,
           });
-          router.push({ name: "home" });
-          let {data} = axios.get(`${db}verify`)
-          console.log(data)
+          // router.push({ name: "home" });
+          let {data} = await axios.get(`${db}verify`)
+          console.log(data.userID)
 
         } else {
           sweet({
@@ -168,6 +166,25 @@ export default createStore({
           text: "An error occured while retrieving Products",
           icon: "error",
           timer: 3000,
+        });
+      }
+    },
+    async addToCart(context, payload) {
+      try {
+        let msg = (await axios.post(`${db}cart/add`, payload)).data;
+          context.dispatch("fetchCart");
+          sweet({
+            title: "Add to cart",
+            text: msg,
+            icon: "success",
+            timer: 4000,
+          });
+      } catch (e) {
+        sweet({
+          title: "Error",
+          text: "Please try to add this product at a different time",
+          icon: "error",
+          timer: 4000,
         });
       }
     },
