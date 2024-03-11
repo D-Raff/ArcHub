@@ -30,7 +30,17 @@ cartRouter.delete('/delete', bodyParser.json(), (req, res)=>{
     } catch (e) {
         res.json({
             status: res.statusCode,
-            msg: "cart cleared"
+            msg: "could not clear cart"
+        })
+    }
+})
+cartRouter.post('/add', bodyParser.json(), (req,res)=>{
+    try {
+        cart.addToCart(req, res)
+    } catch (e) {
+        res.json({
+            status: res.statusCode,
+            msg: "An error occured when adding this product to cart"
         })
     }
 })

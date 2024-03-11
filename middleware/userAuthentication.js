@@ -8,7 +8,7 @@ const {sign, verify, JsonWebTokenError} = jwt
 function createToken(user){
     return sign({
         emailAdd: user.emailAdd,
-        userPassword: user.userPassword
+        userPassword: user.userPassword,
     },
     process.env.SECRET_KEY,// secret key allows us to encrypt our payload. we need to use secret key to create a token
     {
@@ -19,9 +19,14 @@ function createToken(user){
 
 function verifyToken(req, res, next){
     //retrieve token from the browser
-    const token = req?.headers['Authorization']
+    const token = req?.headers['authorization']
+    // const token = req?.headers.authorization || this does the same as the above code
     if(token){
         if(verify(token, process.env.SECRET_KEY)){
+            verify(token, process.env.SECRET_KEY,(err,user)=>{
+                console.log(user)
+                req.user = user
+            })
             next()
         }else{
             res?.json({

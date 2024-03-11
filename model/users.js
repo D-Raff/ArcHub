@@ -7,11 +7,11 @@ class Users{
         SELECT userID, firstName, lastName, emailAdd, ContactNo, userRole
         FROM Users;
         `
-        db.query(qry, (err, result)=>{
+        db.query(qry, (err, results)=>{
             if(err) throw err
             res.json({
                 status: res.statusCode,
-                result
+                results
             })
         })
     }

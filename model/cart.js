@@ -41,7 +41,7 @@ class Cart {
     const qry = `
     DELETE FROM Cart
     WHERE OrderID = ${req.params.id};
-    `
+    `;
     db.query(qry, [req.body], (err) => {
       if (err) throw err;
       res.json({
@@ -54,7 +54,7 @@ class Cart {
     const qry = `
     DELETE FROM Cart
     WHERE emailAdd = ?;
-    `
+    `;
     // access the cookies and grab the emailAdd
     db.query(qry, [user.emailAdd], (err) => {
       if (err) throw err;
@@ -64,7 +64,19 @@ class Cart {
       });
     });
   }
-
+  async addToCart(req, res) {
+    const qry = `
+    INSERT INTO Cart
+    SET ?
+    `;
+    db.query(qry, [req.body], (err) => {
+      if (err) throw err;
+      res.json({
+        status: res.statusCode,
+        msg: "Added to cart",
+      });
+    });
+  }
 }
 
 export { Cart };

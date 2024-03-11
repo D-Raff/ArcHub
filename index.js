@@ -6,13 +6,14 @@ import {errorHandling} from './middleware/ErrorHandling.js';
 import path from 'path';
 import cors from "cors"
 import { config } from "dotenv";
+import { verifyToken } from "./middleware/userAuthentication.js";
 config()
 
 const app = express()
 const port= +process.env.PORT || 4000
 
 app.use((req, res, next)=>{
-    res.header("Access-Control-Allow-Origin", "https://archub-471i.onrender.com/");
+    res.header("Access-Control-Allow-Origin", "https://archub-49wy.onrender.com/");
     res.header("Access-Control-Allow-Credentials", "true" );
     res.header("Access-Control-Allow-Methods", "*" ); //allows all the http methods
     res.header("Access-Control-Request-Methods", "*" ); //alllows request methods
@@ -38,6 +39,10 @@ app.get('^/$|/archub',(req, res)=>{
 app.use('/users', userRouter)
 app.use('/products', productRouter)
 app.use('/cart', cartRouter)
+app.get('/verify',verifyToken,(req,res)=>{
+    console.log(req.user);
+    res.send("Hey you logged in")
+})
 app.use(errorHandling)
 app.listen(port, ()=>{
     console.log(`Server is running on port http://localhost:${port}`);
