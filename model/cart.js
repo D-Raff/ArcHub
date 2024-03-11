@@ -13,11 +13,8 @@ class Cart {
   fetchCart(req, res) {
     const params = url.parse(req.url);
     let token = params.query.split("=").at(-1);
-    // console.log(token);
     try {
       let user = verify(token, process.env.SECRET_KEY);
-    //   console.log("Object: ", user.emailAdd);
-
       const qry = `
         SELECT c.OrderID, c.userID, c.ProductID, p.ProdImg, p.ProductName, p.Category, p.price, count(c.ProductID) as quantity, u.emailAdd
         FROM Cart c
