@@ -105,6 +105,7 @@ class Users{
                 const validPass = await compare(userPassword, result[0].userPassword)
                 if(validPass){
                     const token = createToken({
+                        userID:result[0].userID,
                         emailAdd,
                         userPassword
                     })
