@@ -1,8 +1,5 @@
 <template>
-  <div class="About">
-    <h1>
-      this is an about page
-    </h1>
+  <div class="About container-fluid">
   </div>
 </template>
 <script>
@@ -10,6 +7,9 @@ export default {
   name: "AboutView",
 }
 </script>
-<style lang="">
-  
+<style>
+.About {
+  background: black;
+  min-height: 80vh;
+}
 </style>
