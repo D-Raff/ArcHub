@@ -22,7 +22,7 @@ cartRouter.delete('/delete/:id', bodyParser.json(), verifyToken, (req, res)=>{
     } catch (e) {
         res.json({
             status: res.statusCode,
-            msg: "An error occured when tryin gto remove this item from the cart"
+            msg: "An error occured when trying to remove this item from the cart"
         })
     }
 })
@@ -37,7 +37,6 @@ cartRouter.delete('/delete', bodyParser.json(), verifyToken, (req, res)=>{
     }
 })
 cartRouter.post('/add', bodyParser.json(), verifyToken, (req,res)=>{
-    console.log(JSON.stringify(req.body.userID)+'controller')
     try {
         cart.addToCart(req, res)
     } catch (e) {

@@ -11,7 +11,7 @@ class Cart {
   fetchCart(req, res) {
     try {
       const qry = `
-        SELECT c.userID, c.ProductID, p.ProdImg, p.ProductName, p.Category, p.price, count(c.ProductID) as quantity
+        SELECT c.OrderID, c.ProductID, p.ProdImg, p.ProductName, p.Category, count(c.ProductID) as quantity, p.price * count(c.ProductID) as totalQty
         FROM Cart c
         LEFT JOIN Products p ON p.ProductID = c.ProductID
         WHERE userID = ?
@@ -47,14 +47,14 @@ class Cart {
   async clearCart(req, res) {
     const qry = `
     DELETE FROM Cart
-    WHERE emailAdd = ?;
+    WHERE userID = ?;
     `;
     // access the cookies and grab the emailAdd
-    db.query(qry, [user.emailAdd], (err) => {
+    db.query(qry, [req.body.userID], (err) => {
       if (err) throw err;
       res.json({
         status: res.statusCode,
-        msg: "This product was deleted",
+        msg: "the cart was cleared",
       });
     });
   }
