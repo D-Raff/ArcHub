@@ -39,10 +39,7 @@ app.get('^/$|/archub',(req, res)=>{
 app.use('/users', userRouter)
 app.use('/products', productRouter)
 app.use('/cart', cartRouter)
-app.get('/verify',verifyToken,(req,res)=>{
-    console.log(req.user);
-    res.send("Hey you logged in")
-})
+
 app.use(errorHandling)
 app.listen(port, ()=>{
     console.log(`Server is running on port http://localhost:${port}`);
