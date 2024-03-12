@@ -1,19 +1,12 @@
 <template>
-    <div>
+    <div class="outerCard">
         <div class="card">
-            <div class="card2">
-                <div class="image">
-                    <slot name="prod-image"></slot>
-                </div>
+            <slot name="prod-image" class="card-img-top"></slot>
+            <div class="card-body">
                 <slot name="Title"></slot>
-                <div>
-                    <div class="desc">
-                        <slot name="desc"></slot>
-                    </div>
-                    <div class="buttons">
-                        <slot class="btns"></slot>
-                    </div>
-                </div>
+            </div>
+            <div class="card-footer">
+                <slot name="btns"></slot>
             </div>
         </div>
     </div>
@@ -24,28 +17,27 @@ export default {
 }
 </script>
 <style scoped>
-.card {
-    width: 190px;
-    height: 254px;
+.outerCard {
+    width: 250px;
+    height: 300px;
     background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
     border-radius: 20px;
     transition: all .3s;
 }
 
-.card2 {
-    width: 190px;
-    height: 254px;
+.card {
+    width: 250px;
+    height: 300px;
     background-color: #1a1a1a;
-    border-radius: ;
     transition: all .2s;
 }
 
-.card2:hover {
+.card:hover {
     transform: scale(0.98);
     border-radius: 20px;
 }
 
-.card:hover {
+.outerCard:hover {
     box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
 }
 </style>

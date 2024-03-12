@@ -183,6 +183,9 @@ export default {
         editUserBtn(){
             this.$store.dispatch('editUser', this.userPayload);
         },
+        delUser(id){
+            this.$store.dispatch('deleteUser', id);
+        },
     },
     computed: {
         products() {

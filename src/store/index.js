@@ -1,22 +1,24 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
 import axios from "axios";
 import sweet from "sweetalert";
 import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 import router from "@/router";
 import AuthenticateUser from "../service/UserAuthentication";
-// const db = "https://archub-49wy.onrender.com/";
-const db = "http://localhost:4500/";
-
+const db = "https://archub-49wy.onrender.com/";
+// const db = "http://localhost:4500/";
+/* eslint-disable */
+// this allows us to send cookies on our headers to the backend using axios
+axios.defaults.withCredentials = true;
 export default createStore({
   state: {
     users: null,
     user: null,
     products: null,
-    product: null
+    product: null,
+    cart: [],
   },
-  getters: {
-  },
+  getters: {},
   mutations: {
     setUsers(state, value) {
       state.users = value;
@@ -30,20 +32,23 @@ export default createStore({
     setProduct(state, value) {
       state.product = value;
     },
+    setCart(state, value) {
+      state.cart = value;
+    },
   },
   actions: {
     async register(context, payload) {
       try {
         let msg = (await axios.post(`${db}users/register`, payload)).data;
-          context.dispatch("fetchUsers");
-          sweet({
-            title: "Sign Up",
-            text: msg,
-            icon: "success",
-            timer: 4000,
-          });
-          location.reload()
-          router.push({ name: "login" });
+        context.dispatch("fetchUsers");
+        sweet({
+          title: "Sign Up",
+          text: msg,
+          icon: "success",
+          timer: 4000,
+        });
+        location.reload();
+        router.push({ name: "login" });
       } catch (e) {
         sweet({
           title: "Error",
@@ -55,7 +60,7 @@ export default createStore({
     },
     async fetchUsers(context) {
       try {
-        let {results} = (await axios.get(`${db}users`)).data;
+        let { results } = (await axios.get(`${db}users`)).data;
         if (results) {
           context.commit("setUsers", results);
         }
@@ -101,7 +106,7 @@ export default createStore({
             icon: "success",
             timer: 4000,
           });
-          location.reload()
+          location.reload();
         }
       } catch (e) {
         sweet({
@@ -120,11 +125,13 @@ export default createStore({
         ).data;
         if (result) {
           context.commit("setUser", { msg, result });
-          cookies.set("VerifiedUser", {
-            msg,
+          cookies.set(
+            "VerifiedUser",
+            // msg,
             token,
-            result,
-          });
+            // result,
+            {}
+          );
           AuthenticateUser.applyToken(token);
           sweet({
             title: msg,
@@ -133,10 +140,7 @@ export default createStore({
             icon: "success",
             timer: 2000,
           });
-          // router.push({ name: "home" });
-          let {data} = await axios.get(`${db}verify`)
-          console.log(data.userID)
-
+          router.push({ name: "home" });
         } else {
           sweet({
             title: "info",
@@ -169,16 +173,31 @@ export default createStore({
         });
       }
     },
+    async fetchCart(context) {
+      try {
+        let {result} = (await axios.get(`${db}cart`)).data;
+        if (result) {
+          context.commit("setCart", result);
+        }
+      } catch (e) {
+        sweet({
+          title: "Error",
+          text: "An error occured while retrieving your Cart",
+          icon: "error",
+          timer: 3000,
+        });
+      }
+    },
     async addToCart(context, payload) {
       try {
-        let msg = (await axios.post(`${db}cart/add`, payload)).data;
-          context.dispatch("fetchCart");
-          sweet({
-            title: "Add to cart",
-            text: msg,
-            icon: "success",
-            timer: 4000,
-          });
+        let {msg} = (await axios.post(`${db}cart/add`, payload)).data;
+        // context.dispatch("fetchCart");
+        sweet({
+          title: "Add to cart",
+          text: msg,
+          icon: "success",
+          timer: 4000,
+        });
       } catch (e) {
         sweet({
           title: "Error",
@@ -188,7 +207,47 @@ export default createStore({
         });
       }
     },
+    async delFromCart(context, payload) {
+      try {
+        let {msg} = await axios.delete(`${db}cart/delete/${payload}`);
+        if (msg) {
+          context.dispatch("fetchCart");
+          sweet({
+            title: "removed Product",
+            text: msg,
+            icon: "success",
+            timer: 4000,
+          });
+        }
+      } catch (e) {
+        sweet({
+          title: "Error",
+          text: "An error occurred while trying to delete this product",
+          icon: "error",
+          timer: 4000,
+        });
+      }
+    },
+    async clearCart(context) {
+      try {
+        let {data} = await axios.delete(`${db}cart/delete`);
+        console.log(data);
+          context.dispatch("fetchCart");
+          sweet({
+            title: "Cart Cleared",
+            text: data.msg,
+            icon: "success",
+            timer: 4000,
+          });
+      } catch (e) {
+        sweet({
+          title: "Error",
+          text: "An error occurred while trying to clear the cart",
+          icon: "error",
+          timer: 4000,
+        });
+      }
+    },
   },
-  modules: {
-  }
-})
+  modules: {},
+});
