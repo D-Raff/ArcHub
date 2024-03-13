@@ -19,7 +19,7 @@ export default {
 <style scoped>
 .outerCard {
     width: 250px;
-    height: 300px;
+    height: 350px;
     background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
     border-radius: 20px;
     transition: all .3s;
@@ -27,7 +27,7 @@ export default {
 
 .card {
     width: 250px;
-    height: 300px;
+    height: 350px;
     background-color: #1a1a1a;
     transition: all .2s;
 }
@@ -35,9 +35,21 @@ export default {
 .card:hover {
     transform: scale(0.98);
     border-radius: 20px;
+    .card-footer{
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
 }
 
 .outerCard:hover {
     box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
+}
+.card-footer{
+    display: flex;
+    justify-content: space-between;
+    transition: all .2s;
+}
+.card-body{
+    color: white;
 }
 </style>
