@@ -28,6 +28,7 @@ function verifyToken(req, res, next){
     if(token){
         if(verify(token, process.env.SECRET_KEY)){
             verify(token, process.env.SECRET_KEY,(err,user)=>{
+                if (err) throw err
                 console.log(user)
                 req.body.userID = user.userID
             })
