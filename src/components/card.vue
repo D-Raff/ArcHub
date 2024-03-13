@@ -21,7 +21,7 @@ export default {
     width: 250px;
     height: 350px;
     background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
-    border-radius: 20px;
+    border-radius: 10px;
     transition: all .3s;
 }
 
@@ -34,11 +34,7 @@ export default {
 
 .card:hover {
     transform: scale(0.98);
-    border-radius: 20px;
-    .card-footer{
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-    }
+    border-radius: 10px;
 }
 
 .outerCard:hover {

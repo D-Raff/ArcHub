@@ -13,22 +13,22 @@
                         <router-link to="/" class="nav-link" id="router-btn" >Home</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="about" class="nav-link" id="router-btn">About Us</router-link>
+                        <router-link to="/about" class="nav-link" id="router-btn">About Us</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="products" class="nav-link" id="router-btn">Store</router-link>
+                        <router-link to="/products" class="nav-link" id="router-btn">Store</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="admin" class="nav-link" id="router-btn">Admin</router-link>
+                        <router-link to="/admin" class="nav-link" id="router-btn">Admin</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="checkout" class="nav-link" id="router-btn">Cart</router-link>
+                        <router-link to="/checkout" class="nav-link" id="router-btn">Cart</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="contact" class="nav-link" id="router-btn">Contact Us</router-link>
+                        <router-link to="/contact" class="nav-link" id="router-btn">Contact Us</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="login" class="nav-link" id="router-btn">Login/Sign Up</router-link>
+                        <router-link to="/login" class="nav-link" id="router-btn">Login/Sign Up</router-link>
                     </li>
                 </ul>
             </div>
@@ -114,5 +114,8 @@ export default {
     100%{
         text-decoration: underline rgba(0, 0, 0, 1);
     }
+}
+#nav-item{
+    color: white;
 }
 </style>

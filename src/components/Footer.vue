@@ -3,11 +3,11 @@
         <div class="links">
             <div class="quick-links">
                 <router-link to="/">Home</router-link>
-                <router-link to="about">About us</router-link>
-                <router-link to="products">Store</router-link>
-                <router-link to="checkout">Cart</router-link>
-                <router-link to="contact">Contact Us</router-link>
-                <router-link to="login">login/signUp</router-link>
+                <router-link to="/about">About us</router-link>
+                <router-link to="/products">Store</router-link>
+                <router-link to="/checkout">Cart</router-link>
+                <router-link to="/contact">Contact Us</router-link>
+                <router-link to="/login">login/signUp</router-link>
             </div>
             <div class="socials">
                 <h5>contact us</h5>
