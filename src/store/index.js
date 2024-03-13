@@ -5,8 +5,8 @@ import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 import router from "@/router";
 import AuthenticateUser from "../service/UserAuthentication";
-const db = "https://archub-49wy.onrender.com/";
-// const db = "http://localhost:4500/";
+// const db = "https://archub-49wy.onrender.com/";
+const db = "http://localhost:4500/";
 /* eslint-disable */
 // this allows us to send cookies on our headers to the backend using axios
 axios.defaults.withCredentials = true;
@@ -118,7 +118,6 @@ export default createStore({
       }
     },
     async login(context, payload) {
-      console.log(payload);
       try {
         const { msg, token, result } = (
           await axios.post(`${db}users/login`, payload)
@@ -191,7 +190,7 @@ export default createStore({
     async addToCart(context, payload) {
       try {
         let {msg} = (await axios.post(`${db}cart/add`, payload)).data;
-        // context.dispatch("fetchCart");
+        context.dispatch("fetchCart");
         sweet({
           title: "Add to cart",
           text: msg,

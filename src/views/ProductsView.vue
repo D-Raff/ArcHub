@@ -50,10 +50,12 @@ export default {
 <style>
 #Products{
     background: black;
+    padding: 10px;
 }
 #products-cnt{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     gap: 10px;
 }
 #cartBtn{
@@ -64,27 +66,21 @@ export default {
     border-left: 2px solid red;
 }
 #cartBtn:hover{
-    animation: pulse 3s infinite;
+    animation: pulse 2s infinite;
 }
 @keyframes pulse {
     50%{
         box-shadow: inset 0px 0px 13px 2px red;
     }
-    100%{
-        box-shadow: non;
-    }
     
-}
-.card:hover{
-    #product-image{
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-    }
 }
 #product-image{
     height: 250px;
+    border-top-left-radius: 10px;
+     border-top-right-radius: 10px;
 }
 #see-more{
     text-decoration: none;
+    color: white;
 }
 </style>
