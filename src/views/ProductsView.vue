@@ -1,7 +1,8 @@
 <template>
     <div class="container-fluid" id="Products">
-        <div v-if="products" class="container">
+        <div v-if="products" class="container" id="products-cnt">
             <card v-for="product in products" :key="product.ProductID">
+                <template #prod-image><img :src="product.ProdImg" alt="prod-img" id="product-image"></template>
                 <template #Title>{{ product.ProductName }}</template>
                 <template #desc>{{ product.ProdDesc }}</template>
                 <template #btns>
@@ -50,16 +51,40 @@ export default {
 #Products{
     background: black;
 }
+#products-cnt{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 #cartBtn{
     border-radius: 10px;
     background: transparent;
     border: none;
     border-right: 2px solid red;
     border-left: 2px solid red;
-    transition: 2s;
 }
 #cartBtn:hover{
-    box-shadow: inset 0px 0px 13px 2px red;
-
+    animation: pulse 3s infinite;
+}
+@keyframes pulse {
+    50%{
+        box-shadow: inset 0px 0px 13px 2px red;
+    }
+    100%{
+        box-shadow: non;
+    }
+    
+}
+.card:hover{
+    #product-image{
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+}
+#product-image{
+    height: 250px;
+}
+#see-more{
+    text-decoration: none;
 }
 </style>
