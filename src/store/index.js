@@ -131,6 +131,7 @@ export default createStore({
             // result,
             {}
           );
+          cookies.set("userRole", result.userRole)
           AuthenticateUser.applyToken(token);
           sweet({
             title: msg,
