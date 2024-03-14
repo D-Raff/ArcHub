@@ -29,7 +29,6 @@ function verifyToken(req, res, next){
         if(verify(token, process.env.SECRET_KEY)){
             verify(token, process.env.SECRET_KEY,(err,user)=>{
                 if (err) throw err
-                console.log(user)
                 req.body.userID = user.userID
             })
             next()
@@ -46,20 +45,6 @@ function verifyToken(req, res, next){
         })
     }
 }
-
-// let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbEFkZCI6ImRhbW9ucmFmZmVsc0BnbWFpbC5jb20iLCJ1c2VyUHdkIjoiMTIzNCIsImlhdCI6MTcwOTczMDUxNywiZXhwIjoxNzA5NzM0MTE3fQ.LywHI5MTezz-Pbv8nadDYIuHxacxktlD6-HWh7qiKCg"
-// let user = verify(token, process.env.SECRET_KEY)
-
-// try {
-    
-// } catch (error) {
-//     if(error instanceof JsonWebTokenError){
-
-//     }
-// }
-
-// error instanceof JsonWebTokenError
-// console.log(user)
 
 export{
     createToken,

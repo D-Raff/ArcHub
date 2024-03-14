@@ -58,9 +58,9 @@ class Users{
     async deleteUser(req, res){
         const qry = `
         Delete FROM Users
-        WHERE userID = ${req.params.id};
+        WHERE userID = ?;
         `
-        db.query(qry, (err)=>{
+        db.query(qry,[req.params.id], (err)=>{
             if(err) throw err
             res.json({
                 status: res.statusCode,
@@ -107,7 +107,8 @@ class Users{
                     const token = createToken({
                         userID:result[0].userID,
                         emailAdd,
-                        userPassword
+                        userPassword,
+                        userRole:result[0].userRole
                     })
                     res.json({
                         status: res.statusCode,
