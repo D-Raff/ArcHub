@@ -98,11 +98,12 @@ export default createStore({
     async editUser(context, payload) {
       try {
         let msg = await axios.patch(`${db}users/update/${payload.userID}`, payload);
+        console.log(await axios.patch(`${db}users/update/${payload.userID}`, payload));
         if (msg) {
           context.dispatch("fetchUsers");
           sweet({
             title: "Updated this user",
-            text: msg,
+            text: msg.data.msg,
             icon: "success",
             timer: 4000,
           });

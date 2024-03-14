@@ -1,5 +1,5 @@
 <template>
-    <div class="Admin" v-if="this.userRole == 'Admin'">
+    <div class="Admin" v-if="this.NavUserRole == 'Admin'">
         <div class="container tab-div">
             <h2>Users</h2>
             <button class="add" data-bs-toggle="modal" data-bs-target="#addUserModal">
@@ -10,6 +10,9 @@
                     <tr id="prod-row">
                         <th scope="col">
                             UserID
+                        </th>
+                        <th scope="col">
+                            userProfileImg
                         </th>
                         <th scope="col">
                             First Name
@@ -37,6 +40,7 @@
                 <tbody>
                     <tr v-for="user in users" :key="user.userID" id="prod-row">
                         <td>{{ user.userID }}</td>
+                        <td>{{ user.userProfileImg }}</td>
                         <td>{{ user.emailAdd }}</td>
                         <td>{{ user.firstName }}</td>
                         <td>{{ user.lastName }}</td>
@@ -116,7 +120,7 @@
                         <input v-model="userPayload.lastName" type="text" name="surname" placeholder="Last Name"><br>
                         <input v-model="userPayload.userRole" type="text" name="role" placeholder="Role"><br>
                         <input v-model="userPayload.emailAdd" type="text" name="email" placeholder="Email address"><br>
-                        <input v-model="userPayload.userProfile" type="text" name="profile" placeholder="Profile link"><br>
+                        <input v-model="userPayload.userProfileImg" type="text" name="profile" placeholder="Profile image link"><br>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -147,7 +151,7 @@
             </div>
         </div>
     </div>
-    <div class="" v-if="this.userRole !== 'Admin'">
+    <div class="" v-if="this.NavUserRole !== 'Admin'">
     <h1></h1>
     </div>
 </template>
@@ -172,14 +176,11 @@ export default {
                 userID: null,
                 firstName: "",
                 lastName: "",
-                userPass: "",
-                userAge: "",
-                gender: "",
                 userRole: "",
                 emailAdd: "",
-                userProfile: "",
+                userProfileImg: ""
             },
-            userRole: ""
+            NavUserRole: ""
         }
     },
     methods: {
@@ -190,17 +191,15 @@ export default {
                     this.lastName = user.lastName
                     this.userRole = user.userRole
                     this.emailAdd = user.emailAdd
-                    this.userProfile = user.userProfile
+                    this.userProfileImg = user.userProfileImg
 
                     this.userPayload = {
                         userID: user.userID,
                         firstName: this.firstName,
                         lastName: this.lastName,
-                        userAge: this.userAge,
-                        gender: this.gender,
                         userRole: this.userRole,
                         emailAdd: this.emailAdd,
-                        userProfile: this.userProfile
+                        userProfileImg: this.userProfileImg
                     }
                 }
             })
@@ -212,7 +211,7 @@ export default {
             this.$store.dispatch('deleteUser', id);
         },
         getRole(){
-            this.userRole =  cookies.get('userRole')
+            this.NavUserRole =  cookies.get('userRole')
         },
         addProduct() {
             this.data = { ProductName: this.ProductName, Price: this.Price, Category: this.Category, ProdImg: this.ProdImg, ProdDesc: this.ProdDesc }
