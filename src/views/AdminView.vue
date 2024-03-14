@@ -1,5 +1,5 @@
 <template>
-    <div class="Admin">
+    <div class="Admin" v-if="this.userRole == 'Admin'">
         <div class="container tab-div">
             <h2>Users</h2>
             <button class="add" data-bs-toggle="modal" data-bs-target="#addUserModal">
@@ -126,8 +126,13 @@
             </div>
         </div>
     </div>
+    <div class="" v-if="this.userRole !== 'Admin'">
+    <h1></h1>
+    </div>
 </template>
 <script>
+import {useCookies} from 'vue3-cookies';
+const {cookies} = useCookies()
 export default {
     name: "AdminView",
     components: {
@@ -154,7 +159,8 @@ export default {
                 userRole: "",
                 emailAdd: "",
                 userProfile: "",
-            }
+            },
+            userRole: ""
         }
     },
     methods: {
@@ -182,10 +188,14 @@ export default {
         },
         editUserBtn(){
             this.$store.dispatch('editUser', this.userPayload);
+            console.log(this.userPayload);
         },
         delUser(id){
             this.$store.dispatch('deleteUser', id);
         },
+        getRole(){
+            this.userRole =  cookies.get('userRole')
+        }
     },
     computed: {
         products() {
@@ -198,6 +208,7 @@ export default {
     mounted() {
         this.$store.dispatch('fetchProducts')
         this.$store.dispatch('fetchUsers')
+        this.getRole()
     }
 
 

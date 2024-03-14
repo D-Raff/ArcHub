@@ -4,7 +4,7 @@ import sweet from "sweetalert";
 import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 import router from "@/router";
-import AuthenticateUser from "../service/UserAuthentication";
+// import AuthenticateUser from "../service/UserAuthentication";
 // const db = "https://archub-49wy.onrender.com/";
 const db = "http://localhost:4500/";
 /* eslint-disable */
@@ -97,7 +97,7 @@ export default createStore({
     },
     async editUser(context, payload) {
       try {
-        let msg = await axios.patch(`${db}users/${payload.userID}`, payload);
+        let msg = await axios.patch(`${db}users/update/${payload.userID}`, payload);
         if (msg) {
           context.dispatch("fetchUsers");
           sweet({
@@ -126,13 +126,10 @@ export default createStore({
           context.commit("setUser", { msg, result });
           cookies.set(
             "VerifiedUser",
-            // msg,
             token,
-            // result,
             {}
           );
           cookies.set("userRole", result.userRole)
-          AuthenticateUser.applyToken(token);
           sweet({
             title: msg,
             text: `Welcome, 

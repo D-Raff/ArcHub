@@ -18,7 +18,7 @@
                     <li class="nav-item">
                         <router-link to="/products" class="nav-link" id="router-btn">Store</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="this.userRole == 'Admin'">
                         <router-link to="/admin" class="nav-link" id="router-btn">Admin</router-link>
                     </li>
                     <li class="nav-item">
@@ -30,6 +30,7 @@
                     <li class="nav-item">
                         <router-link to="/login" class="nav-link" id="router-btn">Login/Sign Up</router-link>
                     </li>
+                    <button @click="getRole()">role</button>
                 </ul>
             </div>
         </div>
@@ -40,7 +41,19 @@
 import {useCookies} from 'vue3-cookies';
 const {cookies} = useCookies()
 export default {
-
+    data() {
+        return {
+            userRole: ""
+        }
+    },
+    methods: {
+        getRole(){
+            this.userRole =  cookies.get('userRole')
+        }
+    },
+    mounted(){
+        this.getRole()
+    }
 }
 </script>
 <style scoped>
