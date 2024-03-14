@@ -170,6 +170,53 @@ export default createStore({
         });
       }
     },
+    async fetchProduct(context, payload) {
+      try {
+        let result = (await axios.get(`${db}products/${payload.id}`))
+          .data;
+        if (result) {
+          context.commit("setProduct", result);
+        } else {
+          sweet.alert({
+            title: "Retrieve a single product",
+            text: "This product was not found",
+            icon: "info",
+            timer: 4000,
+          });
+        }
+      } catch (e) {
+        sweet({
+          title: "Error",
+          text: "this product was not found.",
+          icon: "error",
+          timer: 4000,
+        });
+      }
+    },
+    async addProduct(context, payload) {
+      try {
+        let msg = (await axios.post(`${db}products/add`, payload)).data;
+        console.log(msg);
+        if (msg) {
+          context.dispatch("fetchProducts");
+          sweet({
+            title: "Add Product",
+            text: msg,
+            icon: "success",
+            timer: 4000,
+          });
+          location.reload()
+          
+        }
+      } catch (e) {
+        sweet({
+          title: "Error",
+          text: "Please try again at a different time",
+          icon: "error",
+          timer: 4000,
+        });
+      }
+    },
     async fetchCart(context) {
       try {
         let {result} = (await axios.get(`${db}cart`)).data;

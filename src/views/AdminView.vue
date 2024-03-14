@@ -92,7 +92,7 @@
                         <td>{{ product.ProductName }}</td>
                         <td>{{ product.Category }}</td>
                         <td>{{ product.Price }}</td>
-                        <td>{{ product.ProdIMg }}</td>
+                        <td>{{ product.ProdImg }}</td>
                         <td>{{ product.ProdDesc }}</td>
                         <td class="btns">
                             <button @click="editBtn(product.prodID)" class="btn-edit" data-bs-toggle="modal"
@@ -125,6 +125,27 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="addproductModal" tabindex="-1" aria-labelledby="productModalTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addproductModalTitle">Add a Product</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input v-model="ProductName" type="text" name="name" placeholder="Product Name"><br>
+                        <input v-model="Price" type="text" name="price" placeholder="Price"><br>
+                        <input v-model="Category" type="text" name="Category" placeholder="Category"><br>
+                        <input v-model="ProdImg" type="text" name="image" placeholder="Image Url"><br>
+                        <input v-model="ProdDesc" type="text" name="description" placeholder="Description"><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="addProduct()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="" v-if="this.userRole !== 'Admin'">
     <h1></h1>
@@ -141,13 +162,11 @@ export default {
         return {
             prodPayload: {
                 prodID: null,
-                prodName: "",
-                quantity: "",
-                amount: "",
-                category: "",
-                prodUrl: "",
-                prodBio: "",
-                prodDes: "",
+                ProductName: "",
+                Price: "",
+                Category: "",
+                ProdImg: "",
+                prodDesc: "",
             },
             userPayload: {
                 userID: null,
@@ -188,14 +207,17 @@ export default {
         },
         editUserBtn(){
             this.$store.dispatch('editUser', this.userPayload);
-            console.log(this.userPayload);
         },
         delUser(id){
             this.$store.dispatch('deleteUser', id);
         },
         getRole(){
             this.userRole =  cookies.get('userRole')
-        }
+        },
+        addProduct() {
+            this.data = { ProductName: this.ProductName, Price: this.Price, Category: this.Category, ProdImg: this.ProdImg, ProdDesc: this.ProdDesc }
+            this.$store.dispatch('addProduct', this.data);
+        },
     },
     computed: {
         products() {
