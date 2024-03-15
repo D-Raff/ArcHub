@@ -108,6 +108,28 @@
                 </tbody>
             </table>
         </div>
+        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addUserModalTitle">Add User</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input v-model="firstName" type="text" name="name" placeholder="First Name"><br>
+                        <input v-model="lastName" type="text" name="surname" placeholder="Last Name"><br>
+                        <input v-model="userPassword" type="text" name="Password" placeholder="Password"><br>
+                        <input v-model="userRole" type="text" name="role" placeholder="Role"><br>
+                        <input v-model="emailAdd" type="text" name="email" placeholder="Email address"><br>
+                        <input v-model="userProfileImg" type="text" name="profile" placeholder="Profile image link"><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="addUser()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="EditUserModalTitle" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

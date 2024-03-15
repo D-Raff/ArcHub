@@ -5,8 +5,8 @@ import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 import router from "@/router";
 // import AuthenticateUser from "../service/UserAuthentication";
-const db = "https://archub-49wy.onrender.com/";
-// const db = "http://localhost:4500/";
+// const db = "https://archub-49wy.onrender.com/";
+const db = "http://localhost:4000/";
 /* eslint-disable */
 // this allows us to send cookies on our headers to the backend using axios
 axios.defaults.withCredentials = true;
@@ -60,12 +60,11 @@ export default createStore({
     },
     async addUser(context, payload) {
       try {
-        let msg = (await axios.post(`${db}users/register`, payload)).data;
-        console.log(msg);
+        let msg = (await axios.post(`${db}users/register`, payload));
         context.dispatch("fetchUsers");
         sweet({
           title: "Add User",
-          text: msg,
+          text: msg.data.msg,
           icon: "success",
           timer: 4000,
         });
@@ -73,7 +72,7 @@ export default createStore({
       } catch (e) {
         sweet({
           title: "Error",
-          text: "Please try again at a different time",
+          text: "Please try to add a user at a different time",
           icon: "error",
           timer: 4000,
         });
@@ -116,9 +115,9 @@ export default createStore({
         });
       }
     },
-    async editUser(context, payload) {
+    async deleteUser(context, payload) {
       try {
-        let msg = await axios.patch(`${db}users/delete/${payload.userID}`, payload);
+        let msg = await axios.delete(`${db}users/delete/${payload}`);
         if (msg) {
           context.dispatch("fetchUsers");
           sweet({
@@ -127,7 +126,7 @@ export default createStore({
             icon: "success",
             timer: 4000,
           });
-          location.reload();
+          // location.reload();
         }
       } catch (e) {
         sweet({
