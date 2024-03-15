@@ -100,7 +100,7 @@
                         <td>{{ product.ProdDesc }}</td>
                         <td class="btns">
                             <button @click="editBtn(product.ProductID)" class="btn-edit" data-bs-toggle="modal"
-                                data-bs-target="#productModal"><i class="fa-regular fa-pen-to-square"></i></button>
+                                data-bs-target="#editProductModal"><i class="fa-regular fa-pen-to-square"></i></button>
                             <button @click="delProduct(product.ProductID)" class="btn-del"><i
                                     class="fa-solid fa-trash"></i></button>
                         </td>
@@ -130,7 +130,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="EditUserModalTitle" aria-hidden="true">
+        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="EditUserModalTitle"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -142,7 +143,8 @@
                         <input v-model="userPayload.lastName" type="text" name="surname" placeholder="Last Name"><br>
                         <input v-model="userPayload.userRole" type="text" name="role" placeholder="Role"><br>
                         <input v-model="userPayload.emailAdd" type="text" name="email" placeholder="Email address"><br>
-                        <input v-model="userPayload.userProfileImg" type="text" name="profile" placeholder="Profile image link"><br>
+                        <input v-model="userPayload.userProfileImg" type="text" name="profile"
+                            placeholder="Profile image link"><br>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -151,7 +153,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="addproductModal" tabindex="-1" aria-labelledby="productModalTitle" aria-hidden="true">
+        <div class="modal fade" id="addproductModal" tabindex="-1" aria-labelledby="productModalTitle"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -172,14 +175,35 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="productModalTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="productModalTitle">Edit product</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input v-model="prodPayload.ProductName" type="text" name="name" placeholder="Product name"><br>
+                        <input v-model="prodPayload.Price" type="text" name="amount"><br>
+                        <input v-model="prodPayload.Category" type="text" name="category"><br>
+                        <input v-model="prodPayload.ProdImg" type="text" name="imageUrl"><br>
+                        <input v-model="prodPayload.prodDesc" type="text" name="Desc"><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="editProduct()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="" v-if="this.NavUserRole !== 'Admin'">
-    <h1></h1>
+        <h1></h1>
     </div>
 </template>
 <script>
-import {useCookies} from 'vue3-cookies';
-const {cookies} = useCookies()
+import { useCookies } from 'vue3-cookies';
+const { cookies } = useCookies()
 export default {
     name: "AdminView",
     components: {
@@ -204,19 +228,20 @@ export default {
             },
             NavUserRole: "",
             userPassword: ""
-            
+
         }
     },
     methods: {
-        addUser(){
-            this.data = {userID: null,
-                        firstName: this.firstName,
-                        lastName: this.lastName,
-                        userPassword: this.userPassword,
-                        userRole: this.userRole,
-                        emailAdd: this.emailAdd,
-                        userProfileImg: this.userProfileImg
-                    }
+        addUser() {
+            this.data = {
+                userID: null,
+                firstName: this.firstName,
+                lastName: this.lastName,
+                userPassword: this.userPassword,
+                userRole: this.userRole,
+                emailAdd: this.emailAdd,
+                userProfileImg: this.userProfileImg
+            }
             this.$store.dispatch('addUser', this.data)
         },
         editUser(id) {
@@ -239,20 +264,43 @@ export default {
                 }
             })
         },
-        editUserBtn(){
+        editUserBtn() {
             this.$store.dispatch('editUser', this.userPayload);
         },
-        delUser(id){
+        delUser(id) {
             this.$store.dispatch('deleteUser', id);
         },
-        getRole(){
-            this.NavUserRole =  cookies.get('userRole')
+        getRole() {
+            this.NavUserRole = cookies.get('userRole')
         },
         addProduct() {
             this.data = { ProductName: this.ProductName, Price: this.Price, Category: this.Category, ProdImg: this.ProdImg, ProdDesc: this.ProdDesc }
             this.$store.dispatch('addProduct', this.data);
         },
-        delProduct(id){
+        editProduct() {
+            this.$store.dispatch('editProduct', this.prodPayload);
+        },
+        editBtn(id) {
+            this.products.forEach((item) => {
+                if (item.productID == +id) {
+                    this.ProductName = item.ProductName
+                    this.Price = item.Price
+                    this.Category = item.Category
+                    this.ProdImg = item.ProdImg
+                    this.prodDesc = item.prodDesc
+
+                    this.prodPayload = {
+                        prodID: item.prodID,
+                        ProductName: this.ProductName,
+                        Price: this.Price,
+                        Category: this.Category,
+                        ProdImg: this.ProdImg,
+                        prodDesc: this.prodDesc
+                    }
+                }
+            })
+        },
+        delProduct(id) {
             this.$store.dispatch('deleteProduct', id)
         }
     },
