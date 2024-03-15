@@ -1,59 +1,31 @@
 <template>
-    <div class="Admin" v-if="this.NavUserRole == 'Admin'">
-        <div class="container tab-div">
-            <h2>Users</h2>
-            <button class="add" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                <i class="fa-solid fa-user-plus"></i>
-            </button>
-            <table class="table-secondary">
-                <thead id="prod-row">
-                    <tr id="prod-row">
-                        <th scope="col">
-                            UserID
-                        </th>
-                        <th scope="col">
-                            userProfileImg
-                        </th>
-                        <th scope="col">
-                            First Name
-                        </th>
-                        <th scope="col">
-                            Last Name
-                        </th>
-                        <th scope="col">
-                            User Age
-                        </th>
-                        <th scope="col">
-                            Gender
-                        </th>
-                        <th scope="col">
-                            User Role
-                        </th>
-                        <th scope="col">
-                            Email Add
-                        </th>
-                        <th scope="col">
-                            Edit/Delete
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="user in users" :key="user.userID" id="prod-row">
-                        <td>{{ user.userID }}</td>
-                        <td>{{ user.userProfileImg }}</td>
-                        <td>{{ user.emailAdd }}</td>
-                        <td>{{ user.firstName }}</td>
-                        <td>{{ user.lastName }}</td>
-                        <td>{{ user.userRole }}</td>
-                        <td class="btns">
-                            <button @click="editUser(user.userID)" class="btn-edit" data-bs-toggle="modal"
-                                data-bs-target="#editUserModal"><i class="fa-solid fa-user-pen"></i></button>
-                            <button @click="delUser(user.userID)" class="btn-del"><i
-                                    class="fa-solid fa-user-minus"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div class="Admin container-fluid" v-if="this.NavUserRole == 'Admin'">
+        <h2>Users</h2>
+        <button class="add" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <i class="fa-solid fa-user-plus"></i>
+        </button>
+        <div class="user container">
+            <div class="card" v-for="user in users" :key="user.userID">
+                <div class="card-header">
+                    <img :src="user.userProfileImg" alt="user-image" class="userimg">
+                </div>
+                <div class="card-body" id="c-body">
+                    <p>User ID:</p>
+                    <section>{{ user.userID }}</section>
+                    <p>user Name:</p>
+                    <section class="name">{{ user.firstName }} {{ user.lastName }}</section>
+                    <p>User Role:</p>
+                    <section>{{ user.userRole }}</section>
+                    <p>Email Address:</p>
+                    <section>{{ user.emailAdd }}</section>
+                </div>
+                <div class="card-footer">
+                    <button @click="editUser(user.userID)" class="btn-edit" data-bs-toggle="modal"
+                        data-bs-target="#editUserModal"><i class="fa-solid fa-user-pen" id="edit"></i></button>
+                    <button @click="delUser(user.userID)" class="btn-del"><i
+                            class="fa-solid fa-user-minus"></i></button>
+                </div>
+            </div>
         </div>
         <div class="container tab-div">
             <h2>Products</h2>
@@ -175,7 +147,8 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="productModalTitle" aria-hidden="true">
+        <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="productModalTitle"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -198,7 +171,7 @@
         </div>
     </div>
     <div class="" v-if="this.NavUserRole !== 'Admin'">
-        <h1></h1>
+        <h1>This Page is for admins only. If this message is displaying, you most likely do not belong here.</h1>
     </div>
 </template>
 <script>
@@ -267,9 +240,9 @@ export default {
         editUserBtn() {
             this.$store.dispatch('editUser', this.userPayload);
         },
-        delUser(id) {
-            this.$store.dispatch('deleteUser', id);
-        },
+        // delUser(id) {
+        //     this.$store.dispatch('deleteUser', id);
+        // },
         getRole() {
             this.NavUserRole = cookies.get('userRole')
         },
@@ -323,7 +296,91 @@ export default {
 }
 </script>
 <style>
-#Desc{
-    
+.Admin {
+    min-height: 80vh;
+    background: black;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.user {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    width: 280px;
+    background: white;
+    padding: 3px;
+}
+
+.card-header {
+    background-color: #1a1a1a;
+    min-height: 220px;
+}
+
+#c-body {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.card-body p {
+    margin: 0;
+    color: #2D619E;
+    font-size: 20px;
+}
+
+.card-body section {
+    color: #1a1a1a;
+    font-size: 15px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #1a1a1a;
+}
+
+.userimg {
+    border-radius: 20%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.btn-del {
+    border: none;
+    border-radius: 50%;
+    color: #B01515;
+    background: transparent;
+    transition: 0.5s;
+    transition-property: box-shadow;
+}
+
+.btn-edit {
+    border: none;
+    border-radius: 50%;
+    color: #2D619E;
+    background: transparent;
+    transition: 0.5s;
+    transition-property: box-shadow;
+}
+
+.btn-edit:hover {
+    box-shadow: 0 0 5px rgb(0, 140, 255),
+        0 0 25px rgb(0, 140, 255),
+        0 0 50px rgb(0, 140, 255),
+        0 0 100px rgb(0, 140, 255);
+}
+
+.btn-del:hover {
+    box-shadow: 0 0 5px #B01515,
+        0 0 25px #B01515,
+        0 0 50px #B01515,
+        0 0 100px #B01515;
 }
 </style>
