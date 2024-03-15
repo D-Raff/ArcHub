@@ -260,6 +260,29 @@ export default createStore({
         });
       }
     },
+    async deleteProduct(context, payload) {
+      try {
+        let msg = (await axios.delete(`${db}products/delete/${payload}`));
+        if (msg) {
+          context.dispatch("fetchProducts");
+          sweet({
+            title: "Delete",
+            text: msg.data.msg,
+            icon: "success",
+            timer: 4000,
+          });
+          location.reload()
+          
+        }
+      } catch (e) {
+        sweet({
+          title: "Error",
+          text: "Please try to delete this product at a different time",
+          icon: "error",
+          timer: 4000,
+        });
+      }
+    },
     async fetchCart(context) {
       try {
         let {result} = (await axios.get(`${db}cart`)).data;

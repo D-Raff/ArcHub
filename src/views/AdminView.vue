@@ -101,7 +101,7 @@
                         <td class="btns">
                             <button @click="editBtn(product.ProductID)" class="btn-edit" data-bs-toggle="modal"
                                 data-bs-target="#productModal"><i class="fa-regular fa-pen-to-square"></i></button>
-                            <button @click="delProd(product.ProductID)" class="btn-del"><i
+                            <button @click="delProduct(product.ProductID)" class="btn-del"><i
                                     class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
@@ -252,6 +252,9 @@ export default {
             this.data = { ProductName: this.ProductName, Price: this.Price, Category: this.Category, ProdImg: this.ProdImg, ProdDesc: this.ProdDesc }
             this.$store.dispatch('addProduct', this.data);
         },
+        delProduct(id){
+            this.$store.dispatch('deleteProduct', id)
+        }
     },
     computed: {
         products() {
