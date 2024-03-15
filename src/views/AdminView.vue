@@ -1,5 +1,5 @@
 <template>
-    <div class="Admin" v-if="this.NavUserRole == 'Admin'">
+    <div class="Admin container-fluid" v-if="this.NavUserRole == 'Admin'">
         <div class="container tab-div">
             <h2>Users</h2>
             <button class="add" data-bs-toggle="modal" data-bs-target="#addUserModal">
@@ -19,12 +19,6 @@
                         </th>
                         <th scope="col">
                             Last Name
-                        </th>
-                        <th scope="col">
-                            User Age
-                        </th>
-                        <th scope="col">
-                            Gender
                         </th>
                         <th scope="col">
                             User Role
@@ -54,6 +48,28 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="user container">
+            <div class="card" v-for="user in users" :key="user.userID">
+                <div class="card-header">
+                    <img :src="user.userProfileImg" alt="user-image" class="userimg">
+                </div>
+                <div class="card-body">
+                    <p>User ID:</p>
+                    <section>{{ user.userID }}</section>
+                    <p>user Name:</p>
+                    <p class="name">{{ user.firstName }} {{user.lastName}}</p>
+                    <p>User Role:</p>
+                    <section>{{ user.userRole }}</section>
+                    <p>Email Address:</p>
+                    <section>{{ user.emailAdd }}</section>
+                    <section></section>
+                    <section></section>
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
         </div>
         <div class="container tab-div">
             <h2>Products</h2>
@@ -198,7 +214,7 @@
         </div>
     </div>
     <div class="" v-if="this.NavUserRole !== 'Admin'">
-        <h1></h1>
+        <h1>This Page is for admins only. If this message is displaying, you most likely do not belong here.</h1>
     </div>
 </template>
 <script>
@@ -323,7 +339,19 @@ export default {
 }
 </script>
 <style>
-#Desc{
-    
+.Admin{
+    min-height: 80vh;
+}
+.user{
+    display: flex;
+    gap: 20px;
+}
+.card{
+    width: 280px;
+}
+.userimg{
+    border-radius: 50%;
+    height: 200px;
+    object-fit: cover;
 }
 </style>
