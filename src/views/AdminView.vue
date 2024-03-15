@@ -184,10 +184,10 @@
                     </div>
                     <div class="modal-body">
                         <input v-model="prodPayload.ProductName" type="text" name="name" placeholder="Product name"><br>
-                        <input v-model="prodPayload.Price" type="text" name="amount"><br>
-                        <input v-model="prodPayload.Category" type="text" name="category"><br>
-                        <input v-model="prodPayload.ProdImg" type="text" name="imageUrl"><br>
-                        <input v-model="prodPayload.prodDesc" type="text" name="Desc"><br>
+                        <input v-model="prodPayload.Price" type="text" name="amount" placeholder="Price"><br>
+                        <input v-model="prodPayload.Category" type="text" name="category" placeholder=""><br>
+                        <input v-model="prodPayload.ProdImg" type="text" name="imageUrl" placeholder=""><br>
+                        <input v-model="prodPayload.ProdDesc" type="text" placeholder="" id="Desc"><br>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -211,12 +211,12 @@ export default {
     data() {
         return {
             prodPayload: {
-                prodID: null,
+                ProductID: null,
                 ProductName: "",
                 Price: "",
                 Category: "",
                 ProdImg: "",
-                prodDesc: "",
+                ProdDesc: "",
             },
             userPayload: {
                 userID: null,
@@ -282,23 +282,24 @@ export default {
         },
         editBtn(id) {
             this.products.forEach((item) => {
-                if (item.productID == +id) {
+                if (item.ProductID == +id) {
                     this.ProductName = item.ProductName
                     this.Price = item.Price
                     this.Category = item.Category
                     this.ProdImg = item.ProdImg
-                    this.prodDesc = item.prodDesc
+                    this.ProdDesc = item.ProdDesc
 
                     this.prodPayload = {
-                        prodID: item.prodID,
+                        ProductID: item.ProductID,
                         ProductName: this.ProductName,
                         Price: this.Price,
                         Category: this.Category,
                         ProdImg: this.ProdImg,
-                        prodDesc: this.prodDesc
+                        ProdDesc: this.ProdDesc
                     }
                 }
             })
+            console.log(this.prodPayload);
         },
         delProduct(id) {
             this.$store.dispatch('deleteProduct', id)
@@ -321,4 +322,8 @@ export default {
 
 }
 </script>
-<style></style>
+<style>
+#Desc{
+    
+}
+</style>

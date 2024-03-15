@@ -258,13 +258,13 @@ export default createStore({
     },
     async addProduct(context, payload) {
       try {
-        let msg = (await axios.post(`${db}products/add`, payload)).data;
+        let msg = (await axios.post(`${db}products/add`, payload));
         console.log(msg);
         if (msg) {
           context.dispatch("fetchProducts");
           sweet({
             title: "Add Product",
-            text: msg,
+            text: msg.data.msg,
             icon: "success",
             timer: 4000,
           });
@@ -282,7 +282,7 @@ export default createStore({
     },
     async editProduct(context, payload) {
       try {
-        let msg = await axios.patch(`${db}products/update/${payload.productID}`, payload);
+        let msg = await axios.patch(`${db}products/update/${payload.ProductID}`, payload);
         if (msg) {
           context.dispatch("fetchProducts");
           sweet({
