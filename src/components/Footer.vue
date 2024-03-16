@@ -60,7 +60,7 @@ export default {
 }
 .contact-pers a{
     text-decoration: none;
-    font-size: 10px;
+    font-size: 15px;
     color: #2D619E;
 }
 .contact-pers{

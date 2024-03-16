@@ -7,7 +7,7 @@
                 <template #desc>{{ product.ProdDesc }}</template>
                 <template #btns>
                     <router-link :to="{ name: 'product', params: { id: product.ProductID } }" id="see-more">View More</router-link>
-                    <button @click="addtoCart(product.ProductID)" id="cartBtn">add to cart</button>
+                    <button @click="addtoCart(product.ProductID)" id="cartBtn"><i class="fa-solid fa-cart-plus"></i></button>
                 </template>
             </card>
         </div>
@@ -51,6 +51,7 @@ export default {
 #Products{
     background: black;
     padding: 10px;
+    min-height: 80vh;
 }
 #products-cnt{
     display: flex;
@@ -62,25 +63,37 @@ export default {
     border-radius: 10px;
     background: transparent;
     border: none;
-    border-right: 2px solid red;
-    border-left: 2px solid red;
+    color: green;
+    font-size: 20px;
+    transition: text-shadow 0.3s ease, transform 0.3s ease;
 }
-#cartBtn:hover{
-    animation: pulse 2s infinite;
+#cartBtn:hover {
+    transform: translateY(-0.1em) translateX(0.1em);
+    text-shadow: -6px 4px rgb(6, 59, 6);
 }
-@keyframes pulse {
-    50%{
-        box-shadow: inset 0px 0px 13px 2px red;
-    }
-    
+
+#cartBtn:active {
+  transform: translateY(0em);
 }
+
 #product-image{
     height: 250px;
+    width: 100%;
+    object-fit: cover;
     border-top-left-radius: 10px;
-     border-top-right-radius: 10px;
+    border-top-right-radius: 10px;
 }
 #see-more{
     text-decoration: none;
     color: white;
+    transition: box-shadow 0.18s ease, text-shadow 0.18s ease, transform 0.18s ease;
+}
+#see-more:hover {
+    transform: translateY(-0.1em) translateX(0.1em);
+}
+
+#see-more:active {
+  text-shadow: 0px 0.1em 0.6em #3c4fe0;
+  transform: translateY(0em);
 }
 </style>
