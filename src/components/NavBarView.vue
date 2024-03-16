@@ -11,6 +11,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="nav-list">
                     <li class="nav-item">
+                        <!-- <router-link :to="{ name: 'userProfile', params: { id: user.userID } }" id="router-btn">View More</router-link> -->
+                    </li>
+                    <li class="nav-item">
                         <router-link to="/" class="nav-link" id="router-btn">Home</router-link>
                     </li>
                     <li class="nav-item">
@@ -28,13 +31,12 @@
                     <li class="nav-item">
                         <router-link to="/contact" class="nav-link" id="router-btn">Contact Us</router-link>
                     </li>
-                    <li class="nav-item" v-if="getCookie()">
+                    <li class="nav-item" v-if="!getCookie()">
                         <router-link to="/login" class="nav-link" id="router-btn">Login/Sign Up</router-link>
                     </li>
                     <li @click="logout()" class="nav-item" v-else>
                         <router-link to="/login" class="nav-link" id="router-btn">Logout</router-link>
-                    </li>
-                </ul>
+                    </li>                </ul>
             </div>
         </div>
     </nav>
@@ -47,12 +49,15 @@ export default {
     data() {
         return {
             userRole: "",
+            userID: "",
             isCookie: ""
         }
     },
     methods: {
         getRole() {
-            this.userRole = cookies.get('userRole')
+            let user = cookies.get('userRole').split('-')
+            this.userRole = user[0]
+            this.userID = user[1]
         },
         getCookie() {
             cookies.isKey('VerifiedUser')
@@ -61,12 +66,19 @@ export default {
             cookies.remove('VerifiedUser');
             cookies.remove('userRole')
             location.reload()
-
+        }
+    },
+    computed:{
+        user(){
+            if (cookies.isKey('VerifiedUser')) {
+                return this.$store.state.user
+            }
         }
     },
     mounted() {
         this.getRole()
         this.getCookie()
+        this.$store.dispatch('fetchUser', this.userID)
     }
 }
 </script>

@@ -19,7 +19,7 @@ axios.defaults.withCredentials = true;
 export default createStore({
   state: {
     users: null,
-    user: null,
+    user: '',
     products: null,
     product: '',
     cart: [],
@@ -105,7 +105,7 @@ export default createStore({
     },
     async fetchUser(context, payload) {
       try {
-        let result = (await axios.get(`${db}users/${payload.id}`)).data;
+        let {result} = (await axios.get(`${db}users/${payload}`)).data;
         if (result) {
           context.commit("setUser", result);
         } else {
@@ -187,7 +187,7 @@ export default createStore({
             "VerifiedUser",
             token, {maxAge: 3600000}
           );
-          cookies.set("userRole", result.userRole, {maxAge: 3600000})
+          cookies.set("userRole", `${result.userRole}-${result.userID}`, {maxAge: 3600000})
           sweet({
             title: msg,
             text: `Welcome, 

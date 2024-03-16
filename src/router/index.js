@@ -41,6 +41,11 @@ const routes = [
     name: 'contact',
     component: () => import('@/views/ContactView.vue')
   },
+  {
+    path: '/userProfile',
+    name: 'userProfile',
+    component: () => import('@/views/userView.vue')
+  } 
 ]
 
 const router = createRouter({
