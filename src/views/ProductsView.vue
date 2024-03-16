@@ -22,7 +22,7 @@ export default {
     components: {
         card
     },
-    data() {
+   data() {
         return {
             cartPayload: {
                 OrderID: null,
@@ -36,7 +36,7 @@ export default {
             let data = { productID: ID, userID: this.userID }
             this.$store.dispatch('addToCart', data);
         }
-    },
+    }, 
     computed: {
         products() {
             return this.$store.state.products
