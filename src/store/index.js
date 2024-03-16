@@ -21,7 +21,7 @@ export default createStore({
     users: null,
     user: null,
     products: null,
-    product: null,
+    product: '',
     cart: [],
   },
   getters: {},
@@ -185,9 +185,9 @@ export default createStore({
           });
           cookies.set(
             "VerifiedUser",
-            token, {}
+            token, {maxAge: 3600000}
           );
-          cookies.set("userRole", result.userRole)
+          cookies.set("userRole", result.userRole, {maxAge: 3600000})
           sweet({
             title: msg,
             text: `Welcome, 
@@ -235,8 +235,7 @@ export default createStore({
     },
     async fetchProduct(context, payload) {
       try {
-        let result = (await axios.get(`${db}products/${payload.id}`))
-          .data;
+        let {result} = (await axios.get(`${db}products/${payload.id}`)).data;
         if (result) {
           context.commit("setProduct", result);
         } else {
@@ -342,18 +341,22 @@ export default createStore({
         });
       }
     },
-    async addToCart(context, payload) {
+    async addToCart(payload) {
       try {
         let {
           msg
         } = (await axios.post(`${db}cart/add`, payload)).data;
-        context.dispatch("fetchCart");
-        sweet({
-          title: "Add to cart",
-          text: msg,
-          icon: "success",
-          timer: 4000,
-        });
+        // context.dispatch("fetchCart");
+        if (cookies.get('VerfiedUser')) {
+          sweet({
+            title: "Add to cart",
+            text: msg,
+            icon: "success",
+            timer: 4000,
+          });
+        }else{
+          router.push({name: 'login'})
+        }
       } catch (e) {
         sweet({
           title: "Error",

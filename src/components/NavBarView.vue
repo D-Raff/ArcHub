@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg" id="navBar">
+    <nav class="navbar navbar-expand-lg sticky-top" id="navBar">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><router-link to="/"><img src="https://iili.io/JVXI1GS.png" alt="logo" class="reactor-logo"></router-link></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
