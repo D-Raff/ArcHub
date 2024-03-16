@@ -17,11 +17,11 @@ class Users{
     }
     fetchUser(req, res){
         const qry = `
-        SELECT userID, firstName, lastName, emailAdd, ContactNo, userRole
+        SELECT userID, firstName, lastName, emailAdd, ContactNo, userRole, userProfileImg
         FROM Users
-        WHERE userID = ${req.params.id}
+        WHERE userID = ?;
         `
-        db.query(qry, (err, result)=>{
+        db.query(qry, [req.params.id], (err, result)=>{
             if(err) throw err
             res.json({
                 status: res.statusCode,

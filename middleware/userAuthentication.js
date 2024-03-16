@@ -38,12 +38,11 @@ function verifyToken(req, res, next){
                 msg: "Please provide the correct credentials"
             })
         }
-    }else if(!cookies.get('VerifiedUser')) {
-        Router.push({name: "login"})
-        // res?.json({
-        //     status: res.statusCode,
-        //     msg: "Please log in"
-        // })
+    }else{
+        res?.json({
+            status: res.statusCode,
+            msg: "Please log in"
+        })
 
     }
 }
