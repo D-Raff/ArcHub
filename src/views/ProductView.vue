@@ -88,12 +88,25 @@ export default {
 .information {
     width: 50%;
     position: relative;
+    text-align: left;
+    background-color: white;
 }
 
 .button-price {
     width: 200px;
     min-height: 200px;
-    border: 3px solid blue;
+    box-shadow: 0px 1px 5px 3px #2D619E;
     font-size: 30px;
+    background: black;
+    font-weight: bold;
+    text-align: center;
+}
+.cart-btn i{
+    font-size: 20px;
+    color: green;
+}
+.cart-btn{
+    font-size: 20px;
+    color: #2D619E;
 }
 </style>

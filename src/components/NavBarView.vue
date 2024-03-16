@@ -1,7 +1,8 @@
 <template>
     <nav class="navbar navbar-expand-lg sticky-top" id="navBar">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><router-link to="/"><img src="https://iili.io/JVXI1GS.png" alt="logo" class="reactor-logo"></router-link></a>
+            <a class="navbar-brand" href="#"><router-link to="/"><img src="https://iili.io/JVXI1GS.png" alt="logo"
+                        class="reactor-logo"></router-link></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -10,7 +11,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="nav-list">
                     <li class="nav-item">
-                        <router-link to="/" class="nav-link" id="router-btn" >Home</router-link>
+                        <router-link to="/" class="nav-link" id="router-btn">Home</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="/about" class="nav-link" id="router-btn">About Us</router-link>
@@ -27,8 +28,13 @@
                     <li class="nav-item">
                         <router-link to="/contact" class="nav-link" id="router-btn">Contact Us</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="this.isCookie == ''">
                         <router-link to="/login" class="nav-link" id="router-btn">Login/Sign Up</router-link>
+                    </li>
+                    <li class="nav-item" v-else>
+                        <button class="btn nav-link">
+                            Logout
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -37,21 +43,26 @@
 </template>
 <script>
 /* eslint-disable */
-import {useCookies} from 'vue3-cookies';
-const {cookies} = useCookies()
+import { useCookies } from 'vue3-cookies';
+const { cookies } = useCookies()
 export default {
     data() {
         return {
-            userRole: ""
+            userRole: "",
+            isCookie: ""
         }
     },
     methods: {
-        getRole(){
-            this.userRole =  cookies.get('userRole')
+        getRole() {
+            this.userRole = cookies.get('userRole')
+        },
+        getCookie() {
+            cookies.get('VerifiedUser')
         }
     },
-    mounted(){
+    mounted() {
         this.getRole()
+        this.getCookie()
     }
 }
 </script>
@@ -68,8 +79,10 @@ export default {
 #router-btn {
     text-decoration: none;
     color: #2D619E;
+    font-weight: 700;
 }
-#router-btn:hover{
+
+#router-btn:hover {
     color: #174478;
     animation: underglow 2s infinite;
 }
@@ -80,26 +93,31 @@ export default {
     animation: glow 3s infinite ease-in;
 }
 
-.reactor-logo{
+.reactor-logo {
     height: 80px;
     animation: reactor 10s infinite;
 }
+
 @keyframes reactor {
-    0%{
+    0% {
         transform: rotate(0deg);
     }
-    8%{
+
+    8% {
         filter: drop-shadow(0 0 5px #14c8f0);
-        
+
     }
-    15%{
+
+    15% {
         filter: drop-shadow(0 0 20px #14c8f0);
 
     }
-    50%{
+
+    50% {
         transform: rotate(360deg);
     }
-    100%{
+
+    100% {
         transform: rotate(360deg);
     }
 }
@@ -120,17 +138,17 @@ export default {
 }
 
 @keyframes underglow {
-    0%{
+    0% {
         text-decoration: underline rgba(0, 0, 0, 1);
     }
-    50%{
+
+    50% {
         text-decoration: underline #174478;
     }
-    100%{
+
+    100% {
         text-decoration: underline rgba(0, 0, 0, 1);
     }
 }
-#nav-item{
-    color: white;
-}
+
 </style>
