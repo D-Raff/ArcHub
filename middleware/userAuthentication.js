@@ -1,6 +1,6 @@
 import "dotenv/config"
 import jwt from "jsonwebtoken";
-const {sign, verify, JsonWebTokenError} = jwt
+const {sign, verify,} = jwt
 
 
 //this allows us to authenticate the user. to create a token we need to use the payload (email add and pass in this case) from the user.
@@ -21,7 +21,7 @@ function createToken(user){
 
 function verifyToken(req, res, next){
     //retrieve token from the browser
-
+     console.log('verify' +req?.cookies['VerifiedUser']);
     const token = req?.cookies['VerifiedUser']
     // const token = req?.headers['authorization']
     // const token = req?.headers.authorization || this does the same as the above code
@@ -38,11 +38,12 @@ function verifyToken(req, res, next){
                 msg: "Please provide the correct credentials"
             })
         }
-    }else{
-        res?.json({
-            status: res.statusCode,
-            msg: "Please log in"
-        })
+    }else if(!cookies.get('VerifiedUser')) {
+        Router.push({name: "login"})
+        // res?.json({
+        //     status: res.statusCode,
+        //     msg: "Please log in"
+        // })
 
     }
 }
