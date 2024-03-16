@@ -28,13 +28,11 @@
                     <li class="nav-item">
                         <router-link to="/contact" class="nav-link" id="router-btn">Contact Us</router-link>
                     </li>
-                    <li class="nav-item" v-if="this.isCookie == ''">
+                    <li class="nav-item" v-if="getCookie()">
                         <router-link to="/login" class="nav-link" id="router-btn">Login/Sign Up</router-link>
                     </li>
-                    <li class="nav-item" v-else>
-                        <button class="btn nav-link">
-                            Logout
-                        </button>
+                    <li @click="logout()" class="nav-item" v-else>
+                        <router-link to="/login" class="nav-link" id="router-btn">Logout</router-link>
                     </li>
                 </ul>
             </div>
@@ -57,7 +55,13 @@ export default {
             this.userRole = cookies.get('userRole')
         },
         getCookie() {
-            cookies.get('VerifiedUser')
+            cookies.isKey('VerifiedUser')
+        },
+        logout(){
+            cookies.remove('VerifiedUser');
+            cookies.remove('userRole')
+            location.reload()
+
         }
     },
     mounted() {
