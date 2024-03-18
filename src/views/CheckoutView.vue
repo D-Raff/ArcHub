@@ -36,7 +36,6 @@ export default {
     methods: {
         delfromcart(id) {
             this.$store.dispatch('delFromCart', id);
-            location.reload()
         },
         clearCart() {
             this.$store.dispatch('clearCart')

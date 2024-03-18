@@ -319,6 +319,7 @@ export default createStore({
     },
     async fetchCart(context, payload) {
       try {
+        applyToken()
         let { result } = (await axios.get(`${db}cart?userID=${payload}`)).data;
         if (result) {
           context.commit("setCart", result);
@@ -359,12 +360,12 @@ export default createStore({
     async delFromCart(context, payload) {
       try {
         applyToken()
-        let { msg } = await axios.delete(`${db}cart/delete/${payload}`).data;
-        if (msg) {
+        let { data } = await axios.delete(`${db}cart/delete/${payload}`);
+        if (data) {
           context.dispatch("fetchCart");
           sweet({
             title: "removed Product",
-            text: msg,
+            text: data.msg,
             icon: "success",
             timer: 2000,
           });
