@@ -21,7 +21,7 @@ function createToken(user){
 
 function verifyToken(req, res, next){
     //retrieve token from the browser
-     console.log('verify' +req?.cookies['VerifiedUser']);
+    console.log('verify' +req?.cookies);
     const token = req?.cookies['VerifiedUser']
     // const token = req?.headers['authorization']
     // const token = req?.headers.authorization || this does the same as the above code

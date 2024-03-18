@@ -6,7 +6,7 @@ import {errorHandling} from './middleware/ErrorHandling.js';
 import path from 'path';
 import cors from "cors"
 import { config } from "dotenv";
-import { verifyToken } from "./middleware/userAuthentication.js";
+// import { verifyToken } from "./middleware/userAuthentication.js";
 config()
 
 const app = express()
