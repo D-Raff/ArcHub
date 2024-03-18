@@ -25,14 +25,20 @@
     </div>
 </template>
 <script>
+import {getRole} from '@/service/UserAuthentication';
 export default {
     name: "CheckoutView",
+    data() {
+        return {
+            userID: ""
+        }
+    },
     methods: {
-        delfromcart(id){
+        delfromcart(id) {
             this.$store.dispatch('delFromCart', id);
             location.reload()
         },
-        clearCart(){
+        clearCart() {
             this.$store.dispatch('clearCart')
         }
 
@@ -43,7 +49,11 @@ export default {
         },
     },
     mounted() {
-        this.$store.dispatch('fetchCart')
+        let user = getRole()
+        if (user) {
+            this.userID = user.userID
+        }
+        this.$store.dispatch('fetchCart', this.userID)
     }
 }
 </script>

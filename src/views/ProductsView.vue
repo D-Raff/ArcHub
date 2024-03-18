@@ -16,6 +16,7 @@
 </template>
 <script>
 import card from '@/components/card.vue';
+import {getRole} from '@/service/UserAuthentication.js';
 
 export default {
     name: "ProductsView",
@@ -33,17 +34,21 @@ export default {
     },
     methods: {
         addtoCart(ID) {
-            let data = { productID: ID, userID: this.userID }
+            let data = {productID: ID, userID: this.userID }
             this.$store.dispatch('addToCart', data);
-        }
+        },
     }, 
     computed: {
         products() {
             return this.$store.state.products
-        }
+        },
     },
     mounted() {
         this.$store.dispatch('fetchProducts')
+        let user = getRole()
+        if(user){
+            this.userID = user.userID
+        }
     }
 }
 </script>
