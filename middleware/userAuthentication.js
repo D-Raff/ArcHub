@@ -9,6 +9,7 @@ function createToken(user){
 
     return sign({
         userID: user.userID,
+        userRole: user.userRole,
         emailAdd: user.emailAdd,
         userPassword: user.userPassword,
     },
@@ -21,10 +22,10 @@ function createToken(user){
 
 function verifyToken(req, res, next){
     //retrieve token from the browser
-    console.log('verify' +req?.cookies);
-    const token = req?.cookies['VerifiedUser']
-    // const token = req?.headers['authorization']
+    
+    const token = req?.headers['authorization'];
     // const token = req?.headers.authorization || this does the same as the above code
+    // const token = req?.cookies['VerifiedUser']
     if(token){
         if(verify(token, process.env.SECRET_KEY)){
             verify(token, process.env.SECRET_KEY,(err,user)=>{
@@ -38,12 +39,11 @@ function verifyToken(req, res, next){
                 msg: "Please provide the correct credentials"
             })
         }
-    }else if(!cookies.get('VerifiedUser')) {
-        Router.push({name: "login"})
-        // res?.json({
-        //     status: res.statusCode,
-        //     msg: "Please log in"
-        // })
+    }else{
+        res?.json({
+            status: res.statusCode,
+            msg: "Please log in"
+        })
 
     }
 }
