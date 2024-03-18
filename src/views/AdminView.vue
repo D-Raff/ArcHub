@@ -175,8 +175,7 @@
     </div>
 </template>
 <script>
-import { useCookies } from 'vue3-cookies';
-const { cookies } = useCookies()
+import { getRole } from '@/service/UserAuthentication.js';
 export default {
     name: "AdminView",
     components: {
@@ -240,11 +239,8 @@ export default {
         editUserBtn() {
             this.$store.dispatch('editUser', this.userPayload);
         },
-        // delUser(id) {
-        //     this.$store.dispatch('deleteUser', id);
-        // },
-        getRole() {
-            this.NavUserRole = cookies.get('userRole')
+        delUser(id) {
+            this.$store.dispatch('deleteUser', id);
         },
         addProduct() {
             this.data = { ProductName: this.ProductName, Price: this.Price, Category: this.Category, ProdImg: this.ProdImg, ProdDesc: this.ProdDesc }
@@ -272,10 +268,15 @@ export default {
                     }
                 }
             })
-            console.log(this.prodPayload);
         },
         delProduct(id) {
             this.$store.dispatch('deleteProduct', id)
+        },
+        role() {
+            let user = getRole()
+            if (user) {
+                this.NavUserRole = user.userRole
+            }
         }
     },
     computed: {
@@ -289,7 +290,10 @@ export default {
     mounted() {
         this.$store.dispatch('fetchProducts')
         this.$store.dispatch('fetchUsers')
-        this.getRole()
+        let user = getRole()
+        if (user) {
+            this.NavUserRole = user.userRole
+        }
     }
 
 

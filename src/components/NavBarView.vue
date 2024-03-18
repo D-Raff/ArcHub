@@ -11,7 +11,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="nav-list">
                     <li class="nav-item">
-                        <router-link to="/userProfile" id="router-btn" v-if="getCookie() === true"><img :src="user.userProfileImg" alt="user-image" id="mini-profile"></router-link>
+                        <router-link to="/userProfile" id="router-btn" v-if="isCookie"><img :src="user.userProfileImg" alt="user-image" id="mini-profile"></router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="/" class="nav-link" id="router-btn">Home</router-link>
@@ -31,7 +31,7 @@
                     <li class="nav-item">
                         <router-link to="/contact" class="nav-link" id="router-btn">Contact Us</router-link>
                     </li>
-                    <li class="nav-item" v-if="getCookie() === false">
+                    <li class="nav-item" v-if="!isCookie">
                         <router-link to="/login" class="nav-link" id="router-btn">Login/Sign Up</router-link>
                     </li>
                     <li @click="logout()" class="nav-item" v-else>
@@ -57,13 +57,14 @@ export default {
     methods: {
         getRole() {
             if (cookies.isKey('VerifiedUser')) {
-                let user = cookies.get('userRole').split('-')
-                this.userRole = user[0]
-                this.userID = user[1]
+                let token = cookies.get('VerifiedUser');
+                let user = JSON.parse( atob( token.split('.')[1] ) )
+                this.userID = user.userID;
+                this.userRole = user.userRole;                
             }
         },
         getCookie() {
-            cookies.isKey('VerifiedUser')
+            this.isCookie = cookies.isKey('VerifiedUser')
         },
         logout(){
             cookies.remove('VerifiedUser');

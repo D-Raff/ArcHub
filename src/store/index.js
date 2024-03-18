@@ -1,16 +1,10 @@
-import {
-  createStore
-} from "vuex";
+import { createStore } from "vuex";
 import axios from "axios";
 import sweet from "sweetalert";
-import {
-  useCookies
-} from "vue3-cookies";
-const {
-  cookies
-} = useCookies();
+import { useCookies } from "vue3-cookies";
+const { cookies } = useCookies();
 import router from "@/router";
-import AuthenticateUser from "../service/UserAuthentication";
+import { applyToken } from "@/service/UserAuthentication";
 // const db = "https://archub-49wy.onrender.com/";
 const db = "http://localhost:4000/";
 /* eslint-disable */
@@ -19,10 +13,10 @@ axios.defaults.withCredentials = true;
 export default createStore({
   state: {
     users: null,
-    user: '',
+    user: "",
     products: null,
-    product: '',
-    cart: [],
+    product: "",
+    cart: null,
   },
   getters: {},
   mutations: {
@@ -55,7 +49,7 @@ export default createStore({
         });
         location.reload();
         router.push({
-          name: "login"
+          name: "login",
         });
       } catch (e) {
         sweet({
@@ -68,7 +62,7 @@ export default createStore({
     },
     async addUser(context, payload) {
       try {
-        let msg = (await axios.post(`${db}users/register`, payload));
+        let msg = await axios.post(`${db}users/register`, payload);
         context.dispatch("fetchUsers");
         sweet({
           title: "Add User",
@@ -88,9 +82,7 @@ export default createStore({
     },
     async fetchUsers(context) {
       try {
-        let {
-          results
-        } = (await axios.get(`${db}users`)).data;
+        let { results } = (await axios.get(`${db}users`)).data;
         if (results) {
           context.commit("setUsers", results);
         }
@@ -105,7 +97,7 @@ export default createStore({
     },
     async fetchUser(context, payload) {
       try {
-        let {result} = (await axios.get(`${db}users/${payload}`)).data;
+        let { result } = (await axios.get(`${db}users/${payload}`)).data;
         if (result) {
           context.commit("setUser", result);
         } else {
@@ -149,7 +141,10 @@ export default createStore({
     },
     async editUser(context, payload) {
       try {
-        let msg = await axios.patch(`${db}users/update/${payload.userID}`, payload);
+        let msg = await axios.patch(
+          `${db}users/update/${payload.userID}`,
+          payload
+        );
         if (msg) {
           context.dispatch("fetchUsers");
           sweet({
@@ -171,24 +166,20 @@ export default createStore({
     },
     async login(context, payload) {
       try {
-        const {
-          msg,
-          token,
-          result
-        } = (
+        const { msg, token, result } = (
           await axios.post(`${db}users/login`, payload)
         ).data;
         if (result) {
           context.commit("setUser", {
             msg,
-            result
+            result,
           });
-          AuthenticateUser.applyToken(token)
-          cookies.set(
-            "VerifiedUser",
-            token, {httpOnly:true,secure:true,sameSite:'None',maxAge:3600000}
-          );
-          cookies.set("userRole", `${result.userRole}-${result.userID}`, {httpOnly:true,secure:true,sameSite:'None',maxAge:3600000})
+          cookies.set("VerifiedUser", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+            maxAge: 3600000,
+          });
           sweet({
             title: msg,
             text: `Welcome, 
@@ -197,10 +188,10 @@ export default createStore({
             timer: 2000,
           });
           router.push({
-            name: "home"
+            name: "home",
           });
           setTimeout(() => {
-            location.reload()
+            location.reload();
           }, 1000);
         } else {
           sweet({
@@ -221,9 +212,7 @@ export default createStore({
     },
     async fetchProducts(context) {
       try {
-        let {
-          results
-        } = (await axios.get(`${db}products`)).data;
+        let { results } = (await axios.get(`${db}products`)).data;
         if (results) {
           context.commit("setProducts", results);
         }
@@ -238,7 +227,7 @@ export default createStore({
     },
     async fetchProduct(context, payload) {
       try {
-        let {result} = (await axios.get(`${db}products/${payload.id}`)).data;
+        let { result } = (await axios.get(`${db}products/${payload.id}`)).data;
         if (result) {
           context.commit("setProduct", result);
         } else {
@@ -260,7 +249,7 @@ export default createStore({
     },
     async addProduct(context, payload) {
       try {
-        let msg = (await axios.post(`${db}products/add`, payload));
+        let msg = await axios.post(`${db}products/add`, payload);
         console.log(msg);
         if (msg) {
           context.dispatch("fetchProducts");
@@ -270,8 +259,7 @@ export default createStore({
             icon: "success",
             timer: 4000,
           });
-          location.reload()
-
+          location.reload();
         }
       } catch (e) {
         sweet({
@@ -284,7 +272,10 @@ export default createStore({
     },
     async editProduct(context, payload) {
       try {
-        let msg = await axios.patch(`${db}products/update/${payload.ProductID}`, payload);
+        let msg = await axios.patch(
+          `${db}products/update/${payload.ProductID}`,
+          payload
+        );
         if (msg) {
           context.dispatch("fetchProducts");
           sweet({
@@ -306,7 +297,7 @@ export default createStore({
     },
     async deleteProduct(context, payload) {
       try {
-        let msg = (await axios.delete(`${db}products/delete/${payload}`));
+        let msg = await axios.delete(`${db}products/delete/${payload}`);
         if (msg) {
           context.dispatch("fetchProducts");
           sweet({
@@ -315,8 +306,7 @@ export default createStore({
             icon: "success",
             timer: 4000,
           });
-          location.reload()
-
+          location.reload();
         }
       } catch (e) {
         sweet({
@@ -327,11 +317,9 @@ export default createStore({
         });
       }
     },
-    async fetchCart(context) {
+    async fetchCart(context, payload) {
       try {
-        let {
-          result
-        } = (await axios.get(`${db}cart`)).data;
+        let { result } = (await axios.get(`${db}cart?userID=${payload}`)).data;
         if (result) {
           context.commit("setCart", result);
         }
@@ -346,19 +334,18 @@ export default createStore({
     },
     async addToCart(context, payload) {
       try {
-        let {
-          msg
-        } = (await axios.post(`${db}cart/add`, payload)).data;
+        applyToken()
+        let { msg } = (await axios.post(`${db}cart/add`, payload)).data;
         context.dispatch("fetchCart");
-        if (cookies.get('VerifiedUser')) {
+        if (cookies.get("VerifiedUser")) {
           sweet({
             title: "Add to cart",
             text: msg,
             icon: "success",
             timer: 4000,
           });
-        }else{
-          router.push({name: 'login'})
+        } else {
+          router.push({ name: "login" });
         }
       } catch (e) {
         sweet({
@@ -371,17 +358,19 @@ export default createStore({
     },
     async delFromCart(context, payload) {
       try {
-        let {
-          msg
-        } = await axios.delete(`${db}cart/delete/${payload}`);
+        applyToken()
+        let { msg } = await axios.delete(`${db}cart/delete/${payload}`).data;
         if (msg) {
           context.dispatch("fetchCart");
           sweet({
             title: "removed Product",
             text: msg,
             icon: "success",
-            timer: 4000,
+            timer: 2000,
           });
+          setTimeout(() => {
+            location.reload()
+          }, 2000);
         }
       } catch (e) {
         sweet({
@@ -394,9 +383,7 @@ export default createStore({
     },
     async clearCart(context) {
       try {
-        let {
-          data
-        } = await axios.delete(`${db}cart/delete`);
+        let { data } = await axios.delete(`${db}cart/delete`);
         console.log(data);
         context.dispatch("fetchCart");
         sweet({
