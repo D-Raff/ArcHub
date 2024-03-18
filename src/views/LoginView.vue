@@ -36,18 +36,20 @@ export default {
 </script>
 <style>
 #login{
-    height: 80vh;
+    height: 85vh;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    background: url('https://iili.io/JW1p5k7.jpg');
+    background-position: top;
 }
 .login-box {
     position: relative;
     width: 400px;
     padding: 40px;
-    background: rgba(24, 20, 20, 0.987);
+    background: rgba(24, 20, 20, 0.5);
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
     border-radius: 10px;

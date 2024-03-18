@@ -10,7 +10,7 @@ const {
   cookies
 } = useCookies();
 import router from "@/router";
-// import AuthenticateUser from "../service/UserAuthentication";
+import AuthenticateUser from "../service/UserAuthentication";
 // const db = "https://archub-49wy.onrender.com/";
 const db = "http://localhost:4000/";
 /* eslint-disable */
@@ -183,11 +183,12 @@ export default createStore({
             msg,
             result
           });
+          AuthenticateUser.applyToken(token)
           cookies.set(
             "VerifiedUser",
-            token, {maxAge: 3600000}
+            token, {httpOnly:true,secure:true,sameSite:'None',maxAge:3600000}
           );
-          cookies.set("userRole", `${result.userRole}-${result.userID}`, {maxAge: 3600000})
+          cookies.set("userRole", `${result.userRole}-${result.userID}`, {httpOnly:true,secure:true,sameSite:'None',maxAge:3600000})
           sweet({
             title: msg,
             text: `Welcome, 
@@ -198,7 +199,9 @@ export default createStore({
           router.push({
             name: "home"
           });
-          location.reload()
+          setTimeout(() => {
+            location.reload()
+          }, 1000);
         } else {
           sweet({
             title: "info",
@@ -341,13 +344,13 @@ export default createStore({
         });
       }
     },
-    async addToCart(payload) {
+    async addToCart(context, payload) {
       try {
         let {
           msg
         } = (await axios.post(`${db}cart/add`, payload)).data;
-        // context.dispatch("fetchCart");
-        if (cookies.get('VerfiedUser')) {
+        context.dispatch("fetchCart");
+        if (cookies.get('VerifiedUser')) {
           sweet({
             title: "Add to cart",
             text: msg,
