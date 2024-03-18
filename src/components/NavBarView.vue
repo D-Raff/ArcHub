@@ -11,7 +11,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="nav-list">
                     <li class="nav-item">
-                        <!-- <router-link :to="{ name: 'userProfile', params: { id: user.userID } }" id="router-btn">View More</router-link> -->
+                        <router-link to="/userProfile" id="router-btn" v-if="getCookie() === true"><img :src="user.userProfileImg" alt="user-image" id="mini-profile"></router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="/" class="nav-link" id="router-btn">Home</router-link>
@@ -31,12 +31,13 @@
                     <li class="nav-item">
                         <router-link to="/contact" class="nav-link" id="router-btn">Contact Us</router-link>
                     </li>
-                    <li class="nav-item" v-if="!getCookie()">
+                    <li class="nav-item" v-if="getCookie() === false">
                         <router-link to="/login" class="nav-link" id="router-btn">Login/Sign Up</router-link>
                     </li>
                     <li @click="logout()" class="nav-item" v-else>
                         <router-link to="/login" class="nav-link" id="router-btn">Logout</router-link>
-                    </li>                </ul>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -55,9 +56,11 @@ export default {
     },
     methods: {
         getRole() {
-            let user = cookies.get('userRole').split('-')
-            this.userRole = user[0]
-            this.userID = user[1]
+            if (cookies.isKey('VerifiedUser')) {
+                let user = cookies.get('userRole').split('-')
+                this.userRole = user[0]
+                this.userID = user[1]
+            }
         },
         getCookie() {
             cookies.isKey('VerifiedUser')
@@ -65,7 +68,9 @@ export default {
         logout(){
             cookies.remove('VerifiedUser');
             cookies.remove('userRole')
-            location.reload()
+            setTimeout(() => {
+                location.reload()
+            }, 500);
         }
     },
     computed:{
@@ -76,9 +81,11 @@ export default {
         }
     },
     mounted() {
-        this.getRole()
         this.getCookie()
-        this.$store.dispatch('fetchUser', this.userID)
+        this.getRole()
+        if (cookies.isKey('VerifiedUser')) {
+            this.$store.dispatch('fetchUser', this.userID)
+        }
     }
 }
 </script>
@@ -112,6 +119,14 @@ export default {
 .reactor-logo {
     height: 80px;
     animation: reactor 10s infinite;
+}
+
+#mini-profile{
+    border-radius: 50%;
+    height: 70px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    background-color: lightgray;
 }
 
 @keyframes reactor {

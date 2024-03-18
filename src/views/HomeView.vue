@@ -1,5 +1,10 @@
 <template>
-  <div class="home">
+  <div id="Home">
+    <div id="name">
+      <span class="fade">
+        <span id="bus-name">ArcHub</span>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -9,3 +14,46 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#name{
+  min-height: 85vh;
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://iili.io/JXRPrpj.jpg');
+  background-position: center;
+  background-size: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#bus-name{
+  font-family: "Rubik Glitch Pop", system-ui;
+  font-size: 8em;
+  color: white;
+  animation: glow 3s 2s infinite ease-in;
+}
+.fade{
+  animation: fade-in 4s forwards;
+}
+@keyframes fade-in {
+  from{
+    opacity: 0%;
+  }
+  to{
+    opacity: 100%;
+  }
+}
+@keyframes glow {
+    0% {
+        text-shadow: none;
+    }
+
+    50% {
+        text-shadow: 0px 0px 8px white;
+    }
+
+    100% {
+        text-shadow: none;
+
+    }
+}
+</style>
