@@ -306,7 +306,14 @@ export default {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    align-items: center;
     gap: 50px;
+}
+.add{
+    width: 50px;
+    background: transparent;
+    color: #2D619E;
+    border: none;
 }
 
 .user {
