@@ -14,10 +14,7 @@ function getRole() {
     if (cookies.isKey('VerifiedUser')) {
         let token = cookies.get('VerifiedUser');
         let user = JSON.parse( atob( token.split('.')[1] ) )
-        return {
-            userID: user.userID,
-            userRole: user.userRole
-        }
+        return user
     }
 }
 export {
