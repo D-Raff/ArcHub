@@ -1,15 +1,11 @@
 import { connection as db } from "../config/index.js";
-// import { verifyToken } from "../middleware/userAuthentication.js";
-// import jwt from "jsonwebtoken";
 import { config } from "dotenv";
-
-// const { verify } = jwt;
 
 config();
 
 class Cart {
   fetchCart(req, res) {
-    console.log('res'+JSON.stringify(req.body));
+
     try {
       const qry = `
         SELECT c.OrderID, c.ProductID, p.ProdImg, p.ProductName, p.Category, count(c.ProductID) as quantity, p.price * count(c.ProductID) as totalQty

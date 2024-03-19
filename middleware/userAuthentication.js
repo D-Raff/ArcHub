@@ -1,6 +1,6 @@
 import "dotenv/config"
 import jwt from "jsonwebtoken";
-const {sign, verify,} = jwt
+const {sign, verify, JsonWebTokenError, TokenExpiredError} = jwt
 
 
 //this allows us to authenticate the user. to create a token we need to use the payload (email add and pass in this case) from the user.
@@ -25,26 +25,36 @@ function verifyToken(req, res, next){
     
     const token = req?.headers['authorization'];
     // const token = req?.headers.authorization || this does the same as the above code
-    // const token = req?.cookies['VerifiedUser']
+
     if(token){
-        if(verify(token, process.env.SECRET_KEY)){
+        try {
             verify(token, process.env.SECRET_KEY,(err,user)=>{
                 if (err) throw err
                 req.body.userID = user.userID
             })
+            // verify(token, process.env.SECRET_KEY);
             next()
-        }else{
-            res?.json({
-                status: res.statusCode,
-                msg: "Please provide the correct credentials"
-            })
+        } catch (error) {
+            if( error instanceof JsonWebTokenError ){
+                res?.json({
+                    icon: info,
+                    status: res.statusCode,
+                    msg: "Please log in"
+                })
+            } else if( error instanceof TokenExpiredError ) {
+                res?.json({
+                    status: res.statusCode,
+                    msg: "Token Expired"
+                })
+            }
+            
         }
     }else{
         res?.json({
             status: res.statusCode,
-            msg: "Please log in"
+            msg: "Please provide the correct credentials"
         })
-
+        
     }
 }
 
