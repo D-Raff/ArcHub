@@ -30,15 +30,7 @@
 <script>
 export default {
     name: "ProductView",
-    computed: {
-        product() {
-            return this.$store.state.product
-        }
-    },
-    mounted() {
-        this.$store.dispatch('fetchProduct', this.$route.params)
-    },
-    data() {
+     data() {
         return {
             cartPayload: {
                 OrderID: null,
@@ -46,6 +38,14 @@ export default {
                 userID: ""
             }
         }
+    },
+    computed: {
+        product() {
+            return this.$store.state.product
+        }
+    },
+    mounted() {
+        this.$store.dispatch('fetchProduct', this.$route.params)
     },
     methods: {
         addtoCart(ID) {

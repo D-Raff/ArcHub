@@ -10,7 +10,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="nav-list">
-                    <li class="nav-item">
+                    <li v-if="isCookie" class="nav-item" id="prof-div">
                         <router-link to="/userProfile" id="router-btn" v-if="isCookie"><img :src="user.userProfileImg" alt="user-image" id="mini-profile"></router-link>
                     </li>
                     <li class="nav-item">
@@ -46,6 +46,7 @@
 /* eslint-disable */
 import { useCookies } from 'vue3-cookies';
 const { cookies } = useCookies()
+import { getRole } from "@/service/UserAuthentication.js";
 export default {
     data() {
         return {
@@ -55,14 +56,7 @@ export default {
         }
     },
     methods: {
-        getRole() {
-            if (cookies.isKey('VerifiedUser')) {
-                let token = cookies.get('VerifiedUser');
-                let user = JSON.parse( atob( token.split('.')[1] ) )
-                this.userID = user.userID;
-                this.userRole = user.userRole;                
-            }
-        },
+
         getCookie() {
             this.isCookie = cookies.isKey('VerifiedUser')
         },
@@ -76,16 +70,20 @@ export default {
     },
     computed:{
         user(){
-            if (cookies.isKey('VerifiedUser')) {
+            if (this.isCookie) {
                 return this.$store.state.user
             }
         }
     },
-    mounted() {
+    async mounted() {
         this.getCookie()
-        this.getRole()
-        if (cookies.isKey('VerifiedUser')) {
-            this.$store.dispatch('fetchUser', this.userID)
+        let navUser = getRole()
+        if(navUser){
+            this.userRole = navUser.userRole
+            this.userID = navUser.userID
+        }
+        if (this.isCookie) {
+            await this.$store.dispatch('fetchUser', this.userID) 
         }
     }
 }
@@ -128,6 +126,12 @@ export default {
     aspect-ratio: 1/1;
     object-fit: contain;
     background-color: lightgray;
+}
+#prof-div{
+    border-radius: 50%;
+    height: 70px;
+    width: 70px;
+    color: white;
 }
 
 @keyframes reactor {
