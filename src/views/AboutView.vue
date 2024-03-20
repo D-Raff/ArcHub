@@ -4,7 +4,7 @@
       <span class="bus-name">ArcHub</span>
       <img src="https://iili.io/JXUHjCG.png" alt="robot" class="robot">
       <span class="intro">
-        <p>Inspired by the legendary SuperHero Iron Man, we set out on a journey to build robots and ended up finding a passion for helping those without limbs
+        <p>Inspired by the legendary SuperHero Iron Man, we set out on a journey to build robots and ended up finding a passion for helping those who yearn for freedom of movement
         </p>
       </span>
     </div>
@@ -13,7 +13,21 @@
         <img src="https://iili.io/JWMhX14.png" alt="ab-1" class="ab-1">
         <span class="ab-text">
           <h4>who are we?</h4>
-          <p>What started as a passion project, turned into a journey of helping those who yearn for freedom of movement</p>
+          <p>We started as a small company making robotic arms that could do every day tasks, with the vision of taking of our knowledge and building full, exo-suit style robots inspired by iron man.</p>
+        </span>
+      </span>
+      <span class="ab-inf">
+        <span class="ab-text">
+          <h4>Our mission?</h4>
+          <p>To enrich the lives of people everywhere by providing those who need it with meticulously crafted and designed limbs, created by our robitcs engineers</p>
+        </span>
+        <img src="https://iili.io/JW1UW5Q.png" alt="ab-2" class="ab-2">
+      </span>
+      <span class="ab-inf">
+        <img src="https://iili.io/JW1UAJ4.png" alt="ab-1" class="ab-1">
+        <span class="ab-text-goals">
+          <h4>Our goals for the future</h4>
+          <p>Through constant research and development and development , we are planning to be able mass produce our robotic helpers to aid people with intricate work, from building small and complicated electrical devices, all the way to one day being able to assist doctors in operating rooms all over the world!</p>
         </span>
       </span>
     </div>
@@ -57,10 +71,18 @@ export default {
   width: 500px;
   box-shadow: 25px 20px 6px 2px rgba(255, 255, 255, 0.15)
 }
+.ab-2{
+  object-fit: cover;
+  height: 450px;
+  width: 500px;
+  box-shadow: -25px 20px 6px 2px rgba(255, 255, 255, 0.15)
+}
 .body{
   width: 80%;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
+  gap: 50px;
 }
 .ab-inf{
   display: flex;
@@ -71,15 +93,27 @@ export default {
 .ab-text{
   border: 3px solid red;
   width: 50%;
+  height: fit-content;
   padding: 10px;
   text-align: left;
+  font-size: 1.8rem;
+}
+.ab-text-goals{
+  border: 3px solid red;
+  width: 50%;
+  height: fit-content;
+  padding: 10px;
+  text-align: left;
+  font-size: 1.5rem;
+}
+h4{
+  font-size: 3rem;
 }
 .robot{
-  height: 900px;
+  height: 700px;
   z-index: 2;
   position: relative;
-  top: 10rem;
-  left: -50px;
+
 }
 .intro{
   width: 50%;
