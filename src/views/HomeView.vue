@@ -2,6 +2,7 @@
   <div id="Home">
     <div id="name">
       <span class="fade">
+        <h2>Welcome to</h2>
         <span id="bus-name">ArcHub</span>
       </span>
     </div>
@@ -33,6 +34,7 @@ export default {
 }
 .fade{
   animation: fade-in 4s forwards;
+  color: white;
 }
 @keyframes fade-in {
   from{
