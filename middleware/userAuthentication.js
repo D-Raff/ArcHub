@@ -32,12 +32,10 @@ function verifyToken(req, res, next){
                 if (err) throw err
                 req.body.userID = user.userID
             })
-            // verify(token, process.env.SECRET_KEY);
             next()
         } catch (error) {
             if( error instanceof JsonWebTokenError ){
                 res?.json({
-                    icon: info,
                     status: res.statusCode,
                     msg: "Please log in"
                 })
