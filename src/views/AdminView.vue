@@ -35,40 +35,40 @@
             <table class="table-secondary">
                 <thead id="prod-row">
                     <tr id="prod-row">
-                        <th scope="col">
+                        <th scope="col" id="heading">
                             ProdImg
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="heading">
                             ProdID
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="heading">
                             ProdName
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="heading">
                             Quantity
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="heading">
                             Amount
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="heading">
                             Category
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="heading">
                             Description
                         </th>
-                        <th scope="col">
+                        <th scope="col" id="heading">
                             Edit/Delete
                         </th>
                     </tr>
                 </thead>
-                <tbody v-if="products">
+                <tbody v-if="products" class="prod-body">
                     <tr v-for="product in products" :key="product.prodID" id="prod-row">
-                        <td><img :src="product.prodUrl" alt="product-img" id="tab-img"></td>
+                        <td><img :src="product.ProdImg" alt="product-img" id="tab-img"></td>
                         <td>{{ product.ProductID }}</td>
                         <td>{{ product.ProductName }}</td>
-                        <td>{{ product.Category }}</td>
+                        <td>{{ product.Stock }}</td>
                         <td>{{ product.Price }}</td>
-                        <td>{{ product.ProdImg }}</td>
+                        <td>{{ product.Category }}</td>
                         <td>{{ product.ProdDesc }}</td>
                         <td class="btns">
                             <button @click="editBtn(product.ProductID)" class="btn-edit" data-bs-toggle="modal"
@@ -137,6 +137,7 @@
                         <input v-model="ProductName" type="text" name="name" placeholder="Product Name"><br>
                         <input v-model="Price" type="text" name="price" placeholder="Price"><br>
                         <input v-model="Category" type="text" name="Category" placeholder="Category"><br>
+                        <input v-model="Stock" type="text" name="Stock" placeholder="Stock"><br>
                         <input v-model="ProdImg" type="text" name="image" placeholder="Image Url"><br>
                         <input v-model="ProdDesc" type="text" name="description" placeholder="Description"><br>
                     </div>
@@ -159,6 +160,7 @@
                         <input v-model="prodPayload.ProductName" type="text" name="name" placeholder="Product name"><br>
                         <input v-model="prodPayload.Price" type="text" name="amount" placeholder="Price"><br>
                         <input v-model="prodPayload.Category" type="text" name="category" placeholder=""><br>
+                        <input v-model="prodPayload.Stock" type="text" name="Stock" placeholder="Stock"><br>
                         <input v-model="prodPayload.ProdImg" type="text" name="imageUrl" placeholder=""><br>
                         <input v-model="prodPayload.ProdDesc" type="text" placeholder="" id="Desc"><br>
                     </div>
@@ -187,6 +189,7 @@ export default {
                 ProductName: "",
                 Price: "",
                 Category: "",
+                Stock: "",
                 ProdImg: "",
                 ProdDesc: "",
             },
@@ -243,7 +246,7 @@ export default {
             this.$store.dispatch('deleteUser', id);
         },
         addProduct() {
-            this.data = { ProductName: this.ProductName, Price: this.Price, Category: this.Category, ProdImg: this.ProdImg, ProdDesc: this.ProdDesc }
+            this.data = { ProductName: this.ProductName, Price: this.Price, Category: this.Category, Stock: this.Stock, ProdImg: this.ProdImg, ProdDesc: this.ProdDesc }
             this.$store.dispatch('addProduct', this.data);
         },
         editProduct() {
@@ -255,6 +258,7 @@ export default {
                     this.ProductName = item.ProductName
                     this.Price = item.Price
                     this.Category = item.Category
+                    this.Stock = item.Stock
                     this.ProdImg = item.ProdImg
                     this.ProdDesc = item.ProdDesc
 
@@ -263,6 +267,7 @@ export default {
                         ProductName: this.ProductName,
                         Price: this.Price,
                         Category: this.Category,
+                        Stock: this.Stock,
                         ProdImg: this.ProdImg,
                         ProdDesc: this.ProdDesc
                     }
@@ -315,7 +320,20 @@ export default {
     color: #2D619E;
     border: none;
 }
-
+.tab-div{
+    overflow-x: auto;
+}
+.tab-div::-webkit-scrollbar{
+    display:block !important;
+}
+::-webkit-scrollbar-track{
+    background: transparent;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb{
+    background: #2D619E;
+    border-radius: 10px;
+}
 .user {
     display: flex;
     flex-wrap: wrap;
@@ -393,5 +411,21 @@ export default {
         0 0 25px #B01515,
         0 0 50px #B01515,
         0 0 100px #B01515;
+}
+
+#heading{
+    color: white;
+    border: 3px solid white;
+}
+td{
+    border: 3px solid white;
+}
+.prod-body{
+    color: white;
+}
+#tab-img{
+    height: 100px;
+    aspect-ratio: 1/1;
+    object-fit: cover;
 }
 </style>
