@@ -1,7 +1,7 @@
 <template>
     <div class="Admin container-fluid" v-if="this.NavUserRole == 'Admin'">
         <h2>Users</h2>
-        <button class="add" data-bs-toggle="modal" data-bs-target="#addUserModal">
+        <button @click="empty()" class="add" data-bs-toggle="modal" data-bs-target="#addUserModal">
             <i class="fa-solid fa-user-plus"></i>
         </button>
         <div class="user container">
@@ -172,7 +172,7 @@
             </div>
         </div>
     </div>
-    <div class="" v-if="this.NavUserRole !== 'Admin'">
+    <div class="admin" v-if="this.NavUserRole !== 'Admin'">
         <h1>This Page is for admins only. If this message is displaying, you most likely do not belong here.</h1>
     </div>
 </template>
@@ -282,6 +282,17 @@ export default {
             if (user) {
                 this.NavUserRole = user.userRole
             }
+        },
+        empty() {
+            this.userPayload = {
+                firstName: "",
+                lastName: "",
+                userRole: "",
+                emailAdd: "",
+                userProfileImg: ""
+
+            }
+
         }
     },
     computed: {
@@ -314,26 +325,32 @@ export default {
     align-items: center;
     gap: 50px;
 }
-.add{
+
+.add {
     width: 50px;
     background: transparent;
     color: #2D619E;
     border: none;
 }
-.tab-div{
+
+.tab-div {
     overflow-x: auto;
 }
-.tab-div::-webkit-scrollbar{
-    display:block !important;
+
+.tab-div::-webkit-scrollbar {
+    display: block !important;
 }
-::-webkit-scrollbar-track{
+
+::-webkit-scrollbar-track {
     background: transparent;
     border-radius: 10px;
 }
-::-webkit-scrollbar-thumb{
+
+::-webkit-scrollbar-thumb {
     background: #2D619E;
     border-radius: 10px;
 }
+
 .user {
     display: flex;
     flex-wrap: wrap;
@@ -413,17 +430,20 @@ export default {
         0 0 100px #B01515;
 }
 
-#heading{
+#heading {
     color: white;
     border: 3px solid white;
 }
-td{
+
+td {
     border: 3px solid white;
 }
-.prod-body{
+
+.prod-body {
     color: white;
 }
-#tab-img{
+
+#tab-img {
     height: 100px;
     aspect-ratio: 1/1;
     object-fit: cover;

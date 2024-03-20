@@ -5,8 +5,8 @@ import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 import router from "@/router";
 import { applyToken } from "@/service/UserAuthentication";
-// const db = "https://archub-49wy.onrender.com/";
-const db = "http://localhost:4000/";
+const db = "https://archub-49wy.onrender.com/";
+// const db = "http://localhost:4000/";
 /* eslint-disable */
 // this allows us to send cookies on our headers to the backend using axios
 axios.defaults.withCredentials = true;
@@ -47,10 +47,12 @@ export default createStore({
           icon: "success",
           timer: 4000,
         });
-        location.reload();
         router.push({
           name: "login",
         });
+        setTimeout(() => {
+          location.reload();
+        }, 500);
       } catch (e) {
         sweet({
           title: "Error",
@@ -121,14 +123,15 @@ export default createStore({
       try {
         let msg = await axios.delete(`${db}users/delete/${payload}`);
         if (msg) {
-          context.dispatch("fetchUsers");
-          sweet({
-            title: "User was deleted",
-            text: msg.data.msg,
-            icon: "success",
-            timer: 4000,
-          });
-          // location.reload();
+          if(payload !== 1){
+            context.dispatch("fetchUsers");
+            sweet({
+              title: "User was deleted",
+              text: msg.data.msg,
+              icon: "success",
+              timer: 4000,
+            });
+          }
         }
       } catch (e) {
         sweet({
@@ -339,14 +342,17 @@ export default createStore({
         let { msg } = (await axios.post(`${db}cart/add`, payload)).data;
         context.dispatch("fetchCart");
         if (cookies.get("VerifiedUser")) {
-          sweet({
+          if(msg == "Please log in"){
+            router.push({ name: "login" });
+          }else{
+            sweet({
             title: "Add to cart",
             text: msg,
             icon: "success",
             timer: 4000,
           });
-        } else {
-          router.push({ name: "login" });
+          }
+          
         }
       } catch (e) {
         sweet({
