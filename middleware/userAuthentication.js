@@ -37,7 +37,7 @@ function verifyToken(req, res, next){
             if( error instanceof JsonWebTokenError ){
                 res?.json({
                     status: res.statusCode,
-                    msg: "Please log in"
+                    msg: "token is not valid! Please log in again"
                 })
             } else if( error instanceof TokenExpiredError ) {
                 res?.json({
@@ -47,10 +47,10 @@ function verifyToken(req, res, next){
             }
             
         }
-    }else{
+    }else if(!token){
         res?.json({
             status: res.statusCode,
-            msg: "Please provide the correct credentials"
+            msg: "Please Log in"
         })
         
     }
