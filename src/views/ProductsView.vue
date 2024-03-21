@@ -12,16 +12,22 @@
             </card>
         </div>
 
+        <div v-else class="container loader">
+            <spinner/>
+        </div>
+
     </div>
 </template>
 <script>
 import card from '@/components/card.vue';
 import {getRole} from '@/service/UserAuthentication.js';
+import spinner from '@/components/SpinnerComp.vue';
 
 export default {
     name: "ProductsView",
     components: {
-        card
+        card,
+        spinner
     },
    data() {
         return {
@@ -100,5 +106,9 @@ export default {
 #see-more:active {
   text-shadow: 0px 0.1em 0.6em #3c4fe0;
   transform: translateY(0em);
+}
+.loader{
+    display: flex;
+    justify-content: center;
 }
 </style>
