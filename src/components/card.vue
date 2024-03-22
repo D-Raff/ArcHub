@@ -3,7 +3,8 @@
         <div class="card">
             <slot name="prod-image" class="card-img-top"></slot>
             <div class="card-body">
-                <slot name="Title"></slot>
+                <slot name="Title"></slot><br>
+                <slot name="price"></slot>
             </div>
             <div class="card-footer">
                 <slot name="btns"></slot>

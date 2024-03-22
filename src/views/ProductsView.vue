@@ -4,7 +4,7 @@
             <card v-for="product in products" :key="product.ProductID">
                 <template #prod-image><img :src="product.ProdImg" alt="prod-img" id="product-image"></template>
                 <template #Title>{{ product.ProductName }}</template>
-                <template #desc>{{ product.ProdDesc }}</template>
+                <template #price>R {{ product.Price }}</template>
                 <template #btns>
                     <router-link :to="{ name: 'product', params: { id: product.ProductID } }" id="see-more">View More</router-link>
                     <button @click="addtoCart(product.ProductID)" id="cartBtn"><i class="fa-solid fa-cart-plus"></i></button>
