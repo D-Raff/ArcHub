@@ -29,7 +29,7 @@ app.use(
     }),
     cookieParser(),
     cors({
-        origin: "http://localhost:8080",
+        origin: "https://archub-61ccd.firebaseapp.com/",
         credentials: true
     })
 )
