@@ -67,4 +67,10 @@ export default {
 
     }
 }
+
+@media (max-width:520px) {
+  #bus-name{
+    font-size: 4rem;
+  }
+}
 </style>

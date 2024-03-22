@@ -195,4 +195,9 @@ export default {
         transform: rotate(405deg);
     }
 }
+@media (max-width:520px) {
+  .jarv-container{
+    width: 300px;
+  }
+}
 </style>

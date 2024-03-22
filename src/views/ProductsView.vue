@@ -127,4 +127,10 @@ h1{
     font-family: "Rubik Glitch Pop", system-ui;
     text-decoration: underline red;
 }
+
+@media (max-width:520px) {
+    h1{
+        font-size: 2rem;
+    }
+}
 </style>
