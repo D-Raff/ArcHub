@@ -29,7 +29,7 @@ app.use(
     }),
     cookieParser(),
     cors({
-        origin: "https://archub-61ccd.web.app/",
+        origin: "https://archub-61ccd.web.app",
         credentials: true
     })
 )
