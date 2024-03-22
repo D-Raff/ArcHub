@@ -1,7 +1,7 @@
 <template>
     <div class="Admin container-fluid" v-if="this.NavUserRole == 'Admin'">
         <h2>Users</h2>
-        <button @click="empty()" class="add" data-bs-toggle="modal" data-bs-target="#addUserModal">
+        <button class="add" data-bs-toggle="modal" data-bs-target="#addUserModal">
             <i class="fa-solid fa-user-plus"></i>
         </button>
         <div class="user container">
@@ -113,7 +113,7 @@
                     <div class="modal-body">
                         <input v-model="userPayload.firstName" type="text" name="name" placeholder="First Name"><br>
                         <input v-model="userPayload.lastName" type="text" name="surname" placeholder="Last Name"><br>
-                        <input v-model="userPayload.userRole" type="text" name="role" placeholder="Role"><br>
+                        <input v-model="userPayload.userRole" type="text" name="role" placeholder="Role" v-if="userPayload.userID !== 1"><br>
                         <input v-model="userPayload.emailAdd" type="text" name="email" placeholder="Email address"><br>
                         <input v-model="userPayload.userProfileImg" type="text" name="profile"
                             placeholder="Profile image link"><br>
@@ -243,7 +243,12 @@ export default {
             this.$store.dispatch('editUser', this.userPayload);
         },
         delUser(id) {
-            this.$store.dispatch('deleteUser', id);
+            if(id != 1){
+                this.$store.dispatch('deleteUser', id);
+            }
+            else{
+                alert('cannot delete this admin!')
+            }
         },
         addProduct() {
             this.data = { ProductName: this.ProductName, Price: this.Price, Category: this.Category, Stock: this.Stock, ProdImg: this.ProdImg, ProdDesc: this.ProdDesc }
@@ -283,17 +288,6 @@ export default {
                 this.NavUserRole = user.userRole
             }
         },
-        empty() {
-            this.userPayload = {
-                firstName: "",
-                lastName: "",
-                userRole: "",
-                emailAdd: "",
-                userProfileImg: ""
-
-            }
-
-        }
     },
     computed: {
         products() {

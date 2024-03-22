@@ -89,7 +89,12 @@ export default {
     width: 50%;
     position: relative;
     text-align: left;
-    background-color: white;
+    background-color: black;
+    border: 2px solid red;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    padding: 20px;
 }
 
 .button-price {
@@ -100,6 +105,7 @@ export default {
     background: black;
     font-weight: bold;
     text-align: center;
+    animation: glow 2s infinite;
 }
 .cart-btn i{
     font-size: 20px;
@@ -108,5 +114,17 @@ export default {
 .cart-btn{
     font-size: 20px;
     color: #2D619E;
+    transition: box-shadow 0.18s ease, text-shadow 0.18s ease, transform 0.18s ease;
+}
+.cart-btn:hover {
+    transform: translateY(-0.1em) translateX(0.1em);
+}
+@keyframes glow {
+    0%{
+        box-shadow: 0px 1px 5px 3px #2D619E;
+    }
+    50%{
+        box-shadow: 0px 1px 9px 3px #2D619E;
+    }
 }
 </style>

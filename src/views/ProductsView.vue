@@ -1,10 +1,15 @@
 <template>
     <div class="container-fluid" id="Products">
+        <div class="info">
+            <h1>Our Products</h1>
+            <p>All of our products are made to be customizable to the liking of the user. Lengths of the limbs can be made shorter or longer to accomodate for different points of connection to the user, limbs can also be covered in synthetic skin, if the client so chooses</p>
+            <p>Once a Product is ordered, we will contact you (or ask you to visit our lab) to discuss the details of customization for your specific product. once the product is made, the client will need to come in for final fitting to make sure the limb sits comfortably. If you are unable to get to our labs, we will send an engineer to you!</p>
+        </div>
         <div v-if="products" class="container" id="products-cnt">
             <card v-for="product in products" :key="product.ProductID">
                 <template #prod-image><img :src="product.ProdImg" alt="prod-img" id="product-image"></template>
                 <template #Title>{{ product.ProductName }}</template>
-                <template #desc>{{ product.ProdDesc }}</template>
+                <template #price>R {{ product.Price }}</template>
                 <template #btns>
                     <router-link :to="{ name: 'product', params: { id: product.ProductID } }" id="see-more">View More</router-link>
                     <button @click="addtoCart(product.ProductID)" id="cartBtn"><i class="fa-solid fa-cart-plus"></i></button>
@@ -58,17 +63,20 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 #Products{
     background: black;
     padding: 10px;
     min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center
 }
 #products-cnt{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: center;
+    gap: 30px;
 }
 #cartBtn{
     border-radius: 10px;
@@ -110,5 +118,13 @@ export default {
 .loader{
     display: flex;
     justify-content: center;
+}
+.info{
+    width: 50%;
+}
+h1{
+    font-size: 5rem;
+    font-family: "Rubik Glitch Pop", system-ui;
+    text-decoration: underline red;
 }
 </style>
