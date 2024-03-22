@@ -127,4 +127,21 @@ export default {
         box-shadow: 0px 1px 9px 3px #2D619E;
     }
 }
+
+@media (max-width:520px) {
+  #p-img{
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+  }
+  #Single-View{
+    padding: 0;
+  }
+  #product{
+    padding: 0;
+  }
+  .information{
+    width: 290px;
+  }
+}
 </style>

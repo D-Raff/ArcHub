@@ -309,7 +309,7 @@ export default {
 
 }
 </script>
-<style>
+<style scoped>
 .Admin {
     min-height: 80vh;
     background: black;
