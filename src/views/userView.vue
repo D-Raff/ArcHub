@@ -135,6 +135,7 @@ export default {
 
 #image {
     height: 500px;
+    width: 290px;
 }
 
 .btn-del {
@@ -178,5 +179,12 @@ export default {
 }
 #delBody{
     text-align: center
+}
+
+@media (max-width:520px) {
+  .userCard{
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>
