@@ -5,6 +5,7 @@
         <h2>Welcome to</h2>
         <span id="bus-name">ArcHub</span>
       </span>
+      <h2 class="motto">Where Technology Meets Humanity</h2>
     </div>
   </div>
 </template>
@@ -23,6 +24,7 @@ export default {
   background-position: center;
   background-size: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -35,6 +37,13 @@ export default {
 .fade{
   animation: fade-in 4s forwards;
   color: white;
+  opacity: 0;
+}
+.motto{
+  color: white;
+  opacity: 0;
+  animation: fade-in 3s 2s forwards;
+
 }
 @keyframes fade-in {
   from{

@@ -33,6 +33,9 @@
             <button @click="clearCart()" class="clear">clear cart</button>
         </div>
         <div v-else class="spinner">
+            <h1>
+                No Products in cart
+            </h1>
             <spinner/>
         </div>
 
@@ -81,6 +84,8 @@ export default {
 .spinner{
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 #image{
     height: 100px;

@@ -7,7 +7,6 @@
                 <router-link to="/products">Store</router-link>
                 <router-link to="/checkout">Cart</router-link>
                 <router-link to="/contact">Contact Us</router-link>
-                <router-link to="/login">login/signUp</router-link>
             </div>
             <div class="socials">
                 <h5>contact us</h5>
@@ -58,12 +57,14 @@ export default {
     align-items: flex-start;
     font-size: 13px;
 }
-.contact-pers a{
+
+.contact-pers a {
     text-decoration: none;
     font-size: 15px;
     color: #2D619E;
 }
-.contact-pers{
+
+.contact-pers {
     display: flex;
     flex-direction: column;
     align-items: flex-end;

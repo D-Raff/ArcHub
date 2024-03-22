@@ -20,7 +20,7 @@ export default {
 <style scoped>
 .outerCard {
     width: 250px;
-    height: 360px;
+    height: 380px;
     background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
     border-radius: 10px;
     transition: all .3s;
@@ -28,7 +28,7 @@ export default {
 
 .card {
     width: 250px;
-    height: 360px;
+    height: 380px;
     transition: all .2s;
     background: #1a1a1a;
 }
