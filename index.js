@@ -13,7 +13,7 @@ const app = express()
 const port= +process.env.PORT || 4000
 
 app.use((req, res, next)=>{
-    res.header("Access-Control-Allow-Origin", "https://archub-61ccd.firebaseapp.com/");
+    res.header("Access-Control-Allow-Origin", "https://archub-61ccd.web.app/");
     res.header("Access-Control-Allow-Credentials", "true" );
     res.header("Access-Control-Allow-Methods", "*" ); //allows all the http methods
     res.header("Access-Control-Request-Methods", "*" ); //alllows request methods
@@ -29,7 +29,7 @@ app.use(
     }),
     cookieParser(),
     cors({
-        origin: "https://archub-61ccd.firebaseapp.com/",
+        origin: "https://archub-61ccd.web.app/",
         credentials: true
     })
 )
