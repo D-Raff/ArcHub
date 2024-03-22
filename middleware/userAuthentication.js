@@ -32,14 +32,12 @@ function verifyToken(req, res, next){
                 if (err) throw err
                 req.body.userID = user.userID
             })
-            // verify(token, process.env.SECRET_KEY);
             next()
         } catch (error) {
             if( error instanceof JsonWebTokenError ){
                 res?.json({
-                    icon: info,
                     status: res.statusCode,
-                    msg: "Please log in"
+                    msg: "token is not valid! Please log in again"
                 })
             } else if( error instanceof TokenExpiredError ) {
                 res?.json({
@@ -49,10 +47,10 @@ function verifyToken(req, res, next){
             }
             
         }
-    }else{
+    }else if(!token){
         res?.json({
             status: res.statusCode,
-            msg: "Please provide the correct credentials"
+            msg: "Please Log in"
         })
         
     }
